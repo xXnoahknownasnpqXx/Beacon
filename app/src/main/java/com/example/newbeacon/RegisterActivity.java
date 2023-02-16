@@ -22,10 +22,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class RegisterActivity extends AppCompatActivity {
 
 
-    EditText emailtxt, usernametxt, passwordtxt, confirmpassword;
+    EditText emailtxt, usernametxt, passwordtxt, confirmpasswordtxt;
     Button signUpBtn;
     TextView haveaccounttxt, signintxt;
     ProgressDialog progressDialog;
@@ -45,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
         emailtxt = findViewById(R.id.emailtxt);
         usernametxt = findViewById(R.id.usernametxt);
         passwordtxt = findViewById(R.id.passwordtxt);
-        confirmpassword = findViewById(R.id.confirmpassword);
+        confirmpasswordtxt = findViewById(R.id.confirmpasswordtxt);
         signUpBtn = findViewById(R.id.signupbtn);
         haveaccounttxt = findViewById(R.id.haveaccounttxt);
         signintxt = findViewById(R.id.signintxt);
@@ -60,16 +63,21 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = emailtxt.getText().toString().trim();
                 String password = passwordtxt.getText().toString().trim();
+                String confirmpassword = confirmpasswordtxt.getText().toString().trim();
 
                 if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
                     // error and focus to email edit text
                     emailtxt.setError("Invalid Email");
                     emailtxt.setFocusable(true);
                 }
-                else if (password.length()<8){
+                else if (!validatePassword(password)) {
                     // set error and focus to password editText
-                    passwordtxt.setError("Password must contain at least 8 characters");
-
+                    passwordtxt.setError("Invalid Password. Password must have at least 8 characters" +
+                            "\nand satisfy 3 out of the 4 following requirements:" +
+                            "\n\t1. At least one digit"
+                            + "\n\t2. One lower case letter \n\t3. One upper case letter\n\t4. One symbol.");
+                } else if (!validateequality(password, confirmpassword)){
+                    confirmpasswordtxt.setError("The 2 passwords don't match! Password 1: " + password + "\nPassword 2: " + confirmpassword);
                 }
                 else {
                     registerUser(email, password);
@@ -97,7 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             FirebaseUser user = mAuth.getCurrentUser();
                             //TODO switch out email for username on profile info
-                            Toast.makeText(RegisterActivity.this,"User Registered..." + user.getEmail(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this,"User Registered... " + user.getEmail(), Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                             finish();
                         } else {
@@ -115,6 +123,100 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
     }
+
+
+    private static boolean validatePassword(String str) {
+        int count = 0;
+
+        if (str.contains(" ")) {
+//            System.out.println("password must not contain spaces!");
+            return false;
+        }
+
+        if (isGoodLength(str) == false) {
+//            System.out.println("Invalid Password");
+//            System.out.println("Password length must be between 8 and 16 characters");
+            return false;
+        } else {
+            if (isDigit(str) == true) {
+                count++;
+            }
+            if (isLowerCase(str) == true) {
+                count++;
+            }
+            if (isUpperCase(str) == true) {
+                count++;
+            }
+            if (isSymbol(str) == true) {
+                count++;
+            }
+
+            if (count >= 3) {
+//                System.out.println("Valid password!");
+                return true;
+            } else {
+//                System.out.println("Invalid Password. Password must satisfy 3 out of the 4 following requirements:" +
+//                        "\n\t1. At least one digit"
+//                        + "\n\t2. One lower case letter \n\t3. One upper case letter\n\t4. One symbol.");
+                return false;
+            }
+        }
+    }
+
+    private static boolean validateequality(String password1, String password2){
+        if (password1.equals(password2)){
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean isGoodLength(String password) {
+        if (password.length() < 8){
+            return false;
+        }
+        return true;
+    }
+
+    private static boolean isDigit(String password) {
+        String regex = ".*[0-9].*";
+
+        Pattern p = Pattern.compile(regex);
+
+        Matcher m = p.matcher(password);
+
+        return m.matches();
+    }
+
+    private static boolean isLowerCase(String password) {
+        String regex = ".*[a-z].*";
+
+        Pattern p = Pattern.compile(regex);
+
+        Matcher m = p.matcher(password);
+
+        return m.matches();
+    }
+
+    private static boolean isSymbol(String password) {
+        String regex = ".*[~!@#$%^&*()=+_-].*";
+
+        Pattern p = Pattern.compile(regex);
+
+        Matcher m = p.matcher(password);
+
+        return m.matches();
+    }
+
+    private static boolean isUpperCase(String password) {
+        String regex = ".*[A-Z].*";
+
+        Pattern p = Pattern.compile(regex);
+
+        Matcher m = p.matcher(password);
+
+        return m.matches();
+    }
+
 
     @Override
     public boolean onSupportNavigateUp() {

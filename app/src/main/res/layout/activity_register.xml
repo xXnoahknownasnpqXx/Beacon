@@ -90,7 +90,7 @@
 
     <!--EditText: Confirm password-->
     <EditText
-        android:id="@+id/confirmpassword"
+        android:id="@+id/confirmpasswordtxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/passwordtxt"
@@ -111,7 +111,7 @@
         android:id="@+id/signupbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/confirmpassword"
+        android:layout_below="@id/confirmpasswordtxt"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
