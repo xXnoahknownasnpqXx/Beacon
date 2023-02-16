@@ -58,14 +58,29 @@ public class RegisterActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Registering User...");
 
+
+        /*  For team members:
+            Username/email/password reqs: username must be longer than 4 chars, can't have a space in it,
+            and can't start with a number
+            Password can't have a space, must be 8 or more chars long, needs to have 3/4 of the following reqs:
+            1 digit, 1 uppercase, 1 lowercase, 1 symbol
+            Email is automatically done by firebase and just ensures that string has email format
+            // TODO: fill hashmap of user info for each user so that their profiles are unique
+         */
+
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String username = usernametxt.getText().toString().trim();
                 String email = emailtxt.getText().toString().trim();
                 String password = passwordtxt.getText().toString().trim();
                 String confirmpassword = confirmpasswordtxt.getText().toString().trim();
 
-                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                if (username.length() < 5 || username.contains(" ") || isDigit(String.valueOf(username.charAt(0)))) {
+                    usernametxt.setError("Username must contain at least 5 characters, no spaces, " +
+                            "and cannot start with a digit.");
+                }
+                else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
                     // error and focus to email edit text
                     emailtxt.setError("Invalid Email");
                     emailtxt.setFocusable(true);
