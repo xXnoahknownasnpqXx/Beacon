@@ -110,6 +110,17 @@
         android:text="SIGN IN"
         android:textSize="20dp" />
 
+    <TextView
+        android:id="@+id/recoverpasswordtxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="Forgot Password?"
+        android:layout_below="@id/loginopt"
+        android:textColor="#07bbf2"
+        />
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
