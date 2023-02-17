@@ -121,6 +121,16 @@
         android:textColor="#07bbf2"
         />
 
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/googleSignInBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android.layout_centerHorizontal="true"
+        android:layout_below="@id/signinbtn">
+
+    </com.google.android.gms.common.SignInButton>
+    
+
 
     <LinearLayout
         android:layout_width="match_parent"
