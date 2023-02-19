@@ -28,7 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
         actionBar.setTitle("Profile");
 
         firebaseAuth = FirebaseAuth.getInstance();
-
+        profileView = findViewById(R.id.nameTv);
 //        profileView = findViewById(R.id.profiletxt);
     }
 
