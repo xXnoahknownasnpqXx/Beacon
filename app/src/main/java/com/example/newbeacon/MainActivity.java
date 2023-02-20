@@ -48,7 +48,6 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class MainActivity extends AppCompatActivity {
 
-
     EditText emailtxt, passwordtxt;
     TextView signuptxt, recoverpasstxt, dont_have_accounttxt;
     Button signinbtn;
@@ -243,9 +242,9 @@ public class MainActivity extends AppCompatActivity {
 
             try{
                 task.getResult(ApiException.class);
-                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-                startActivity(intent);
-                finish();
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+
+//                finish();
             } catch (ApiException e){
                 Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
             }
