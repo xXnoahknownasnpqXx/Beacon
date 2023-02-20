@@ -21,7 +21,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -120,7 +123,24 @@ public class RegisterActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             progressDialog.dismiss();
                             FirebaseUser user = mAuth.getCurrentUser();
-                            //TODO switch out email for username on profile info
+                            String email = user.getEmail();
+                            String uid = user.getUid();
+                            //when user is registered store user info in firebase realtime database too
+                            //using HashMap
+                            HashMap<Object, String> hashMap = new HashMap<>();
+                            //put info in  hashmap
+                            hashMap.put("email", email);
+                            hashMap.put("uid", uid);
+                            hashMap.put("name", "");//will add later (edit user profile)
+                            hashMap.put("phone", "");
+                            hashMap.put("image", "");
+                            //firebase database instance
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            //path to store user data name "Users"
+                            DatabaseReference reference = database.getReference("Users");
+                            //put data within hashmap in database
+                            reference.child(uid).setValue(hashMap);
+
                             Toast.makeText(RegisterActivity.this,"User Registered... " + user.getEmail(), Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                             finish();

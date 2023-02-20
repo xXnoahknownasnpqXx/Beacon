@@ -38,6 +38,10 @@ dependencies {
     // google sign in library
     implementation 'com.google.android.gms:play-services-auth:20.4.1'
 
+    implementation 'com.squareup.picasso:picasso:2.8'
+
+    implementation 'com.google.firebase:firebase-database:20.1.0'
+
 //    implementation 'com.google.android.gms:play-services-auth:20.4.1'
 //    implementation platform('com.google.firebase:firebase-bom:31.2.2')
     testImplementation 'junit:junit:4.13.2'
