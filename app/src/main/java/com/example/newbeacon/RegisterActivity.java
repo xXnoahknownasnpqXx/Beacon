@@ -31,7 +31,8 @@ import java.util.regex.Pattern;
 public class RegisterActivity extends AppCompatActivity {
 
 
-    private EditText emailtxt, usernametxt, passwordtxt, confirmpasswordtxt;
+    private EditText emailtxt, passwordtxt, confirmpasswordtxt;
+    private EditText usernametxt;
     private Button signUpBtn;
     private TextView haveaccounttxt, signintxt;
     private ProgressDialog progressDialog;
@@ -132,7 +133,7 @@ public class RegisterActivity extends AppCompatActivity {
                             map.put("email", email);
                             map.put("uid", uid);
                             map.put("name", "");
-                            map.put("phone", "");
+                            map.put("interests", "");
                             map.put("image", "");
                             map.put("username", usernametxt.getText().toString());
 

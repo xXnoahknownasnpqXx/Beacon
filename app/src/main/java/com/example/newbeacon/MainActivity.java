@@ -199,6 +199,10 @@ public class MainActivity extends AppCompatActivity {
 
                             //TODO Copy database hashmap code on here
 
+                            //TODO write dataabase retrieval code on here
+
+                            //TODO Get google sign in to efficiently work
+
                             startActivity(new Intent(MainActivity.this, DashboardActivity.class));
                             finish();
                         } else {
