@@ -21,8 +21,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+//import com.google.firebase.database.DatabaseReference;
+//import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -135,11 +135,11 @@ public class RegisterActivity extends AppCompatActivity {
                             hashMap.put("phone", "");
                             hashMap.put("image", "");
                             //firebase database instance
-                            FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            //path to store user data name "Users"
-                            DatabaseReference reference = database.getReference("Users");
-                            //put data within hashmap in database
-                            reference.child(uid).setValue(hashMap);
+//                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+//                            //path to store user data name "Users"
+//                            DatabaseReference reference = database.getReference("Users");
+//                            //put data within hashmap in database
+//                            reference.child(uid).setValue(hashMap);
 
                             Toast.makeText(RegisterActivity.this,"User Registered... " + user.getEmail(), Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(RegisterActivity.this, MainActivity.class));

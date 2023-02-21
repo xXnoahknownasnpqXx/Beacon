@@ -33,7 +33,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         //bottom navigation
         BottomNavigationView navigationView = findViewById(R.id.navigation);
-        navigationView.setOnNavigationItemReselectedListener(selectedListener);
+       // navigationView.setOnNavigationItemReselectedListener(selectedListener);
 
         //home fragment transaction (default, on star)
         actionBar.setTitle("Home");//change actiobar title
