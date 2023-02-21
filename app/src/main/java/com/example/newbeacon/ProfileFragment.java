@@ -13,12 +13,21 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+<<<<<<< Updated upstream
 //import com.google.firebase.database.DataSnapshot;
 //import com.google.firebase.database.DatabaseError;
 //import com.google.firebase.database.DatabaseReference;
 //import com.google.firebase.database.FirebaseDatabase;
 //import com.google.firebase.database.Query;
 //import com.google.firebase.database.ValueEventListener;
+=======
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+>>>>>>> Stashed changes
 //import com.squareup.picasso.Picasso;
 
 /**
@@ -105,7 +114,11 @@ public class ProfileFragment extends Fragment {
 //                    //get data
 //                    String name = "" + ds.child("name").getValue();
 //                    String email = "" + ds.child("email").getValue();
+<<<<<<< Updated upstream
 //                    String phone = "" + ds.child("phonw").getValue();
+=======
+//                    String phone = "" + ds.child("phone").getValue();
+>>>>>>> Stashed changes
 //                    String image = "" + ds.child("image").getValue();
 //
 //                     //set data
@@ -128,7 +141,11 @@ public class ProfileFragment extends Fragment {
 //            public void onCancelled(@NonNull DatabaseError error) {
 //
 //            }
+<<<<<<< Updated upstream
 //        })
+=======
+//        });
+>>>>>>> Stashed changes
 //
 //
 //        return view;

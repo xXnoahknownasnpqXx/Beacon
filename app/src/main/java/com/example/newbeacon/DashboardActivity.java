@@ -33,7 +33,11 @@ public class DashboardActivity extends AppCompatActivity {
 
         //bottom navigation
         BottomNavigationView navigationView = findViewById(R.id.navigation);
+<<<<<<< Updated upstream
        // navigationView.setOnNavigationItemReselectedListener(selectedListener);
+=======
+//        navigationView.setOnNavigationItemReselectedListener(selectedListener);
+>>>>>>> Stashed changes
 
         //home fragment transaction (default, on star)
         actionBar.setTitle("Home");//change actiobar title
@@ -69,7 +73,7 @@ public class DashboardActivity extends AppCompatActivity {
                             return true;
                         case R.id.nav_users:
                             //users fragment transaction
-                            actionBar.setTitle("Users");//change actiobar title
+                            actionBar.setTitle("Users");//change actionbar title
                             UsersFragment fragment3 = new UsersFragment();
                             FragmentTransaction ft3 = getSupportFragmentManager().beginTransaction();
                             ft3.replace(R.id.content, fragment3, "");

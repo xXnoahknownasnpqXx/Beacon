@@ -33,6 +33,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -77,6 +81,26 @@ public class MainActivity extends AppCompatActivity {
         googlebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                FirebaseUser user = mAuth.getCurrentUser();
+
+                String email = user.getEmail();
+                String uid = user.getUid();
+                //when user is registered store user info in firebase realtime database too
+                //using HashMap
+                HashMap<Object, String> hashMap = new HashMap<>();
+                //put info in  hashmap
+                hashMap.put("Email", email);
+                hashMap.put("Uid", uid);
+                hashMap.put("Name", "");//will add later (edit user profile)
+                hashMap.put("Phone", "");
+                hashMap.put("Image", "");
+                //firebase database instance
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                //path to store user data name "Users"
+                DatabaseReference reference = database.getReference("Users");
+                //put data within hashmap in database
+                reference.child(uid).setValue(hashMap);
                 signIn();
             }
         });

@@ -123,17 +123,18 @@ public class RegisterActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             progressDialog.dismiss();
                             FirebaseUser user = mAuth.getCurrentUser();
+
                             String email = user.getEmail();
                             String uid = user.getUid();
                             //when user is registered store user info in firebase realtime database too
                             //using HashMap
                             HashMap<Object, String> hashMap = new HashMap<>();
                             //put info in  hashmap
-                            hashMap.put("email", email);
-                            hashMap.put("uid", uid);
-                            hashMap.put("name", "");//will add later (edit user profile)
-                            hashMap.put("phone", "");
-                            hashMap.put("image", "");
+                            hashMap.put("Email", email);
+                            hashMap.put("Uid", uid);
+                            hashMap.put("Name", "");//will add later (edit user profile)
+                            hashMap.put("Phone", "");
+                            hashMap.put("Image", "");
                             //firebase database instance
 //                            FirebaseDatabase database = FirebaseDatabase.getInstance();
 //                            //path to store user data name "Users"
@@ -141,7 +142,7 @@ public class RegisterActivity extends AppCompatActivity {
 //                            //put data within hashmap in database
 //                            reference.child(uid).setValue(hashMap);
 
-                            Toast.makeText(RegisterActivity.this,"User Registered... " + user.getEmail(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this,"User registered... " + user.getEmail(), Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                             finish();
                         } else {
