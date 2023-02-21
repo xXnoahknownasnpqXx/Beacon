@@ -33,22 +33,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
 
-    EditText emailtxt, passwordtxt;
-    TextView signuptxt, recoverpasstxt, dont_have_accounttxt;
-    Button signinbtn;
+    private EditText emailtxt, passwordtxt;
+    private TextView signuptxt, recoverpasstxt, dont_have_accounttxt;
+    private Button signinbtn;
     private FirebaseAuth mAuth;
-    GoogleSignInOptions gso;
-    SignInButton googlebtn;
-    GoogleSignInClient gsc;
-    ProgressDialog progressDialog;
+    private GoogleSignInOptions gso;
+    private SignInButton googlebtn;
+    private GoogleSignInClient gsc;
+    private ProgressDialog progressDialog;
 
 
 
@@ -81,26 +77,6 @@ public class MainActivity extends AppCompatActivity {
         googlebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                FirebaseUser user = mAuth.getCurrentUser();
-
-                String email = user.getEmail();
-                String uid = user.getUid();
-                //when user is registered store user info in firebase realtime database too
-                //using HashMap
-                HashMap<Object, String> hashMap = new HashMap<>();
-                //put info in  hashmap
-                hashMap.put("Email", email);
-                hashMap.put("Uid", uid);
-                hashMap.put("Name", "");//will add later (edit user profile)
-                hashMap.put("Phone", "");
-                hashMap.put("Image", "");
-                //firebase database instance
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                //path to store user data name "Users"
-                DatabaseReference reference = database.getReference("Users");
-                //put data within hashmap in database
-                reference.child(uid).setValue(hashMap);
                 signIn();
             }
         });
@@ -189,24 +165,24 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.show();
         mAuth.sendPasswordResetEmail(email)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                progressDialog.dismiss();
-                if (task.isSuccessful()){
-                    Toast.makeText(MainActivity.this, "Email sent", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Toast.makeText(MainActivity.this, "Failed to send email. Make sure you are using correct email address", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                progressDialog.dismiss();
-                //get and show proper error message
-                Toast.makeText(MainActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        progressDialog.dismiss();
+                        if (task.isSuccessful()){
+                            Toast.makeText(MainActivity.this, "Email sent", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(MainActivity.this, "Failed to send email. Make sure you are using correct email address", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                        //get and show proper error message
+                        Toast.makeText(MainActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
     }
 
@@ -220,6 +196,9 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             progressDialog.dismiss();
                             FirebaseUser user = mAuth.getCurrentUser();
+
+                            //TODO Copy database hashmap code on here
+
                             startActivity(new Intent(MainActivity.this, DashboardActivity.class));
                             finish();
                         } else {

@@ -17,10 +17,12 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    FirebaseAuth firebaseAuth;
+    private FirebaseAuth firebaseAuth;
+
+    private ActionBar actionBar;
 
 
-    ActionBar actionBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,50 +33,43 @@ public class DashboardActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        //bottom navigation
-        BottomNavigationView navigationView = findViewById(R.id.navigation);
-<<<<<<< Updated upstream
-       // navigationView.setOnNavigationItemReselectedListener(selectedListener);
-=======
-//        navigationView.setOnNavigationItemReselectedListener(selectedListener);
->>>>>>> Stashed changes
+        BottomNavigationView navigationView = findViewById(R.id.navigationView);
+        navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
-        //home fragment transaction (default, on star)
-        actionBar.setTitle("Home");//change actiobar title
+        actionBar.setTitle("Home");
         HomeFragment fragment1 = new HomeFragment();
         FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
         ft1.replace(R.id.content, fragment1, "");
         ft1.commit();
 
-
     }
+
     private BottomNavigationView.OnNavigationItemSelectedListener selectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-                    //handle item clicks
-                    switch (menuItem.getItemId()){
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem){
+                    // handle item clicks
+                    switch(menuItem.getItemId()){
                         case R.id.nav_home:
-                            //home fragment transaction
-                            actionBar.setTitle("Home");//change actiobar title
+                            // home fragment transaction
+                            actionBar.setTitle("Home");
                             HomeFragment fragment1 = new HomeFragment();
                             FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
                             ft1.replace(R.id.content, fragment1, "");
                             ft1.commit();
                             return true;
                         case R.id.nav_profile:
-                            //profile fragment transaction
-                            actionBar.setTitle("Profile");//change actiobar title
+                            // profile fragment transaction
+                            actionBar.setTitle("Profile");
                             ProfileFragment fragment2 = new ProfileFragment();
                             FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
                             ft2.replace(R.id.content, fragment2, "");
                             ft2.commit();
                             return true;
-                        case R.id.nav_users:
-                            //users fragment transaction
-                            actionBar.setTitle("Users");//change actionbar title
-                            UsersFragment fragment3 = new UsersFragment();
+                        case R.id.nav_settings:
+                            // users fragment transaction
+                            actionBar.setTitle("Settings");
+                            SettingsFragment fragment3 = new SettingsFragment();
                             FragmentTransaction ft3 = getSupportFragmentManager().beginTransaction();
                             ft3.replace(R.id.content, fragment3, "");
                             ft3.commit();
@@ -83,17 +78,17 @@ public class DashboardActivity extends AppCompatActivity {
 
                     return false;
                 }
+
             };
 
     private void checkUserStatus() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user == null) {
-
-        }
-        else {
-          //  profileView.setText(user.getEmail());
             startActivity(new Intent(DashboardActivity.this, MainActivity.class));
             finish();
+        }
+        else {
+            //profileView.setText(user.getEmail());
         }
     }
 

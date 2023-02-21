@@ -8,16 +8,17 @@
     android:gravity="center"
     tools:context=".DashboardActivity">
 
-    <!--Framelayout: show fragment-->
+<!--    show fragments at bottom of screen-->
     <FrameLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1" >
     </FrameLayout>
-    <!-- Bottom Navigation: show menu -->
+
+<!--show menu-->
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigation"
+        android:id="@+id/navigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -25,4 +26,4 @@
         app:menu="@menu/menu_nav">
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-</LinearLayout>
+</LinearLayout>    

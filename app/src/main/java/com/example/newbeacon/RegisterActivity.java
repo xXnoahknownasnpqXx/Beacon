@@ -21,8 +21,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-//import com.google.firebase.database.DatabaseReference;
-//import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -31,10 +31,10 @@ import java.util.regex.Pattern;
 public class RegisterActivity extends AppCompatActivity {
 
 
-    EditText emailtxt, usernametxt, passwordtxt, confirmpasswordtxt;
-    Button signUpBtn;
-    TextView haveaccounttxt, signintxt;
-    ProgressDialog progressDialog;
+    private EditText emailtxt, usernametxt, passwordtxt, confirmpasswordtxt;
+    private Button signUpBtn;
+    private TextView haveaccounttxt, signintxt;
+    private ProgressDialog progressDialog;
     private FirebaseAuth mAuth;
 
 
@@ -59,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Registering User...");
+        progressDialog.setMessage("Registering user...");
 
 
         /*  For team members:
@@ -68,7 +68,6 @@ public class RegisterActivity extends AppCompatActivity {
             Password can't have a space, must be 8 or more chars long, needs to have 3/4 of the following reqs:
             1 digit, 1 uppercase, 1 lowercase, 1 symbol
             Email is automatically done by firebase and just ensures that string has email format
-            // TODO: fill hashmap of user info for each user so that their profiles are unique
          */
 
         signUpBtn.setOnClickListener(new View.OnClickListener() {
@@ -104,11 +103,11 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         signintxt.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v){
-               startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-               finish();
-           }
+            @Override
+            public void onClick(View v){
+                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                finish();
+            }
         });
     }
 
@@ -125,22 +124,22 @@ public class RegisterActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
 
                             String email = user.getEmail();
-                            String uid = user.getUid();
-                            //when user is registered store user info in firebase realtime database too
-                            //using HashMap
-                            HashMap<Object, String> hashMap = new HashMap<>();
-                            //put info in  hashmap
-                            hashMap.put("Email", email);
-                            hashMap.put("Uid", uid);
-                            hashMap.put("Name", "");//will add later (edit user profile)
-                            hashMap.put("Phone", "");
-                            hashMap.put("Image", "");
-                            //firebase database instance
-//                            FirebaseDatabase database = FirebaseDatabase.getInstance();
-//                            //path to store user data name "Users"
-//                            DatabaseReference reference = database.getReference("Users");
-//                            //put data within hashmap in database
-//                            reference.child(uid).setValue(hashMap);
+                            String uid  = user.getUid();
+
+                            HashMap<Object, String> map = new HashMap<>();
+                            //put user info in HashMap
+
+                            map.put("email", email);
+                            map.put("uid", uid);
+                            map.put("name", "");
+                            map.put("phone", "");
+                            map.put("image", "");
+                            map.put("username", usernametxt.getText().toString());
+
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference reference = database.getReference("Users");
+                            reference.child(uid).setValue(map);
+
 
                             Toast.makeText(RegisterActivity.this,"User registered... " + user.getEmail(), Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(RegisterActivity.this, MainActivity.class));
