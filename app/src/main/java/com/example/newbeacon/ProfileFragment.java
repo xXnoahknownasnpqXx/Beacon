@@ -149,10 +149,11 @@ public class ProfileFragment extends Fragment {
     private boolean checkCameraPermission(){
 
         boolean result = ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
-        return result;
 
-        //boolean result1 = ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
-        //return result && result1;
+
+        boolean result1 = ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == (PackageManager.PERMISSION_GRANTED);
+        return result && result1;
     }
 
     private void requestCameraPermission(){
