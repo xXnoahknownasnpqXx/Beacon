@@ -1,78 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
     tools:context=".ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:background="#1d12e3">
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:background="#1d12e3">
 
 
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:orientation="horizontal"
-            android:layout_marginTop="100dp">
-
-            <ImageView
-                android:id="@+id/avatarIv"
-                android:layout_marginStart="20dp"
-                android:background="#392fed"
-                android:padding="5dp"
-                android:src="@drawable/ic_camera_black"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginLeft="20dp">
-            </ImageView>
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="120dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="100dp">
 
-                <TextView
-                    android:id="@+id/nameTv"
+                <ImageView
+                    android:id="@+id/avatarIv"
+                    android:layout_marginStart="20dp"
+                    android:background="#392fed"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_camera_black"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginLeft="20dp">
+                </ImageView>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:textSize="20dp"
-                    android:textColor="@color/white"
-                    android:text="Name: ">
-                </TextView>
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/usernameTv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:textColor="@color/white"
-                    android:text="Username: ">
-                </TextView>
+                    <TextView
+                        android:id="@+id/nameTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:textSize="20dp"
+                        android:textColor="@color/white"
+                        android:text="Name: ">
+                    </TextView>
 
-                <TextView
-                    android:id="@+id/interestsTv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:textColor="@color/white"
-                    android:text="Interests: ">
-                </TextView>
+                    <TextView
+                        android:id="@+id/usernameTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/white"
+                        android:text="Username: ">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/interestsTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/white"
+                        android:text="Interests: ">
+                    </TextView>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
 
-    </RelativeLayout>
+    <!-- TODO: Update blank fragment layout -->
 
-</ScrollView>
+    <!-- Floating Action Button -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:src="@drawable/ic_edit_grey"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="10dp"
+        android:layout_alignParentRight="true" />
+
+
+</RelativeLayout>

@@ -38,7 +38,15 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:20.0.1'
     implementation 'com.google.firebase:firebase-database:20.0.4'
 
-    // google sign in library
+    // google sign in library from https://firebase.google.com/docs/auth/android/google-signin#java
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:31.2.2')
+
+    // Add the dependency for the Firebase Authentication library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-auth'
+
+    // Also add the dependency for the Google Play services library and specify its version
     implementation 'com.google.android.gms:play-services-auth:20.4.1'
 
     implementation 'com.squareup.picasso:picasso:2.8'
