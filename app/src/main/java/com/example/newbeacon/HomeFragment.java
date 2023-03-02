@@ -3,21 +3,31 @@ package com.example.newbeacon;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class HomeFragment extends Fragment {
+
 
     FirebaseAuth firebaseAuth;
     public HomeFragment() {
@@ -36,6 +46,47 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+//Video 9 code, Video 8 needed in order for this to work
+//    private void searchUsers (String query) {
+//                final firebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
+//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+//
+//        ref.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                userList.clear();
+//                for (DataSnapshot ds : snapshot.getChildren()) {
+//                    ModelUser modelUser = ds.getValue(ModelUser.class);
+//
+//                    if (!modelUser.getUid().equals(fUser.getUid())) {
+//
+//                        if(modelUser.getName().toLowerCase().contains(query.toLowerCase()) ||
+//                                modelUser.getEmail().toLowerCase().contains(query.toLowerCase())) {
+//                                userList.add(modelUser);
+//                        }
+//                    }
+//
+//                    adapterUsers = new AdapterUsers(getActivity(), userList);
+//
+//                    adapterUsers.notifyDataSetChanged();
+//
+//                    recyclerView.setAdapter(adaptUsers);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        }};
+//}
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        })
+//    }
     private void checkUserStatus () {
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
@@ -56,8 +107,38 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         inflater.inflate(R.menu.menu_main, menu);
+
+        //SearchView
+        MenuItem item= menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+
+        //search listener
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String s) {
+//                //called when user presses search button from keyboard
+//                //if search query is not empty then search
+//                if(!TextUtils.isEmpty(s.trim())){
+//                    searchUsers(s);
+//                }
+//                else{
+//                    //search text empty, get all users
+//                    getAllUsers();
+//                }
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String s) {
+//                //called when user presses any single letter
+//                return false;
+//            }
+ //       });
+
+
         super.onCreateOptionsMenu(menu, inflater);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
