@@ -170,6 +170,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void requestStoragePermission(){
+        // ActivityCompat.requestPermissions(getActivity(), storagePermissions, Storage_REQUEST_CODE);
         requestPermissions( storagePermissions, Storage_REQUEST_CODE);
     }
 
@@ -185,6 +186,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void requestCameraPermission(){
+        // ActivityCompat.requestPermissions(getActivity(), cameraPermissions, CAMERA_REQUEST_CODE);
         requestPermissions(cameraPermissions, CAMERA_REQUEST_CODE);
     }
 
@@ -225,7 +227,7 @@ public class ProfileFragment extends Fragment {
                 linearLayout.setPadding(10, 10, 10 ,10);
                 //add edit text
                 EditText editText = new EditText(getActivity());
-                editText.setHint("Enter" + key);
+                editText.setHint("Enter " + key);
                 linearLayout.addView(editText);
                 builder.setView(linearLayout);
 
@@ -257,7 +259,7 @@ public class ProfileFragment extends Fragment {
                                     });
                         }
                         else {
-                            Toast.makeText(getActivity(), "Please Enter" + key + "", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Please Enter " + key + "", Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -295,7 +297,7 @@ public class ProfileFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         //set title
         builder.setTitle("Pick Image From");
-        //set irems to dialog
+        //set items to dialog
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -356,7 +358,7 @@ public class ProfileFragment extends Fragment {
             }
             break;
         }
-
+        // super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
 
@@ -428,7 +430,7 @@ public class ProfileFragment extends Fragment {
                         else{
                             //error
                             pd.dismiss();
-                            Toast.makeText(getActivity(), "Some error occured", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Some error occurred", Toast.LENGTH_SHORT).show();
                         }
                     }
                 })
@@ -480,11 +482,11 @@ public class ProfileFragment extends Fragment {
     }
 
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
-        inflater.inflate(R.menu.menu_main, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+//        inflater.inflate(R.menu.menu_main, menu);
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){

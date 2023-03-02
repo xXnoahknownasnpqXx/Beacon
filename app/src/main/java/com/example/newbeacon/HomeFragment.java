@@ -104,40 +104,40 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
-        inflater.inflate(R.menu.menu_main, menu);
-
-        //SearchView
-        MenuItem item= menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
-
-        //search listener
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String s) {
-//                //called when user presses search button from keyboard
-//                //if search query is not empty then search
-//                if(!TextUtils.isEmpty(s.trim())){
-//                    searchUsers(s);
-//                }
-//                else{
-//                    //search text empty, get all users
-//                    getAllUsers();
-//                }
-//                return false;
-//            }
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+//        inflater.inflate(R.menu.menu_main, menu);
 //
-//            @Override
-//            public boolean onQueryTextChange(String s) {
-//                //called when user presses any single letter
-//                return false;
-//            }
- //       });
-
-
-        super.onCreateOptionsMenu(menu, inflater);
-    }
+//        //SearchView
+////        MenuItem item= menu.findItem(R.id.action_search);
+////        SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+//
+//        //search listener
+////        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+////            @Override
+////            public boolean onQueryTextSubmit(String s) {
+////                //called when user presses search button from keyboard
+////                //if search query is not empty then search
+////                if(!TextUtils.isEmpty(s.trim())){
+////                    searchUsers(s);
+////                }
+////                else{
+////                    //search text empty, get all users
+////                    getAllUsers();
+////                }
+////                return false;
+////            }
+////
+////            @Override
+////            public boolean onQueryTextChange(String s) {
+////                //called when user presses any single letter
+////                return false;
+////            }
+// //       });
+//
+//
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
 
 
     @Override
