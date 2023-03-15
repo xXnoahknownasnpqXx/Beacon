@@ -462,4 +462,6 @@ public class AddPostActivity extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    // could you write code for me that would allow users to publish a post on an android studio app for other users to see?
 }
