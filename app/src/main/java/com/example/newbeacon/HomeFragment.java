@@ -152,61 +152,35 @@ public class HomeFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         inflater.inflate(R.menu.menu_main, menu);
 
-        //SearchView
-//        MenuItem item= menu.findItem(R.id.action_search);
-//        SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+        MenuItem item = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView)MenuItemCompat.getActionView(item);
 
-        //search listener
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String s) {
-//                //called when user presses search button from keyboard
-//                //if search query is not empty then search
-//                if(!TextUtils.isEmpty(s.trim())){
-//                    searchUsers(s);
-//                }
-//                else{
-//                    //search text empty, get all users
-//                    getAllUsers();
-//                }
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String s) {
-//                //called when user presses any single letter
-//                return false;
-//            }
- //       });
-          MenuItem item = menu.findItem(R.id.action_search);
-          SearchView searchView = (SearchView)MenuItemCompat.getActionView(item);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+            @Override
+            public boolean onQueryTextSubmit(String s){
+                if(!TextUtils.isEmpty(s)){
+                    searchPosts(s);
+                }
+                else {
+                    loadPosts();
+                }
 
-          searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
-          @Override
-          public boolean onQueryTextSubmit(String s){
-              if(!TextUtils.isEmpty(s)){
-                  searchPosts(s);
-              }
-              else {
-                  loadPosts();
-              }
-
-              return false;
-          }
-         @Override
-         public boolean onQueryTextChange(String s) {
-              if(!TextUtils.isEmpty(s)){
-                  searchPosts(s);
-              }
-              else{
-                  loadPosts();
-              }
-              return false;
-          }
-
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String s) {
+                if(!TextUtils.isEmpty(s)){
+                    searchPosts(s);
+                }
+                else{
+                    loadPosts();
+                }
+                return false;
+            }
         });
 
-          super.onCreateOptionsMenu(menu, inflater);
+        super.onCreateOptionsMenu(menu, inflater);
+
     }
 
 
