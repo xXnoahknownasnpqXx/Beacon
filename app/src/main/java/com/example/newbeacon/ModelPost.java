@@ -2,7 +2,7 @@ package com.example.newbeacon;
 
 public class ModelPost {
 
-    String pId, pTitle, pDescr, pImage, pTime, uid, uEmail, uDp, uName;
+    String pId, pTitle, pDescr, pImage, pTime, uid, uEmail, uDp, uName, uUsername;
 
     public ModelPost() {
 
