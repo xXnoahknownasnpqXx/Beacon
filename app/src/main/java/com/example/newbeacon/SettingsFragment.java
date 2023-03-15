@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -42,6 +44,7 @@ public class SettingsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    RecyclerView recyclerView;
     List<ModelUser> userList;
     AdapterUsers adapterUsers;
     FirebaseAuth firebaseAuth;
@@ -84,12 +87,16 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        recyclerView = view.findViewById(R.id.users_recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         firebaseAuth = FirebaseAuth.getInstance();
 
         userList = new ArrayList<>();
         getAllUsers();
 
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        return view;
     }
 
     private void getAllUsers() {
@@ -142,6 +149,8 @@ public class SettingsFragment extends Fragment {
                     adapterUsers = new AdapterUsers(getActivity(), userList);
 
                     adapterUsers.notifyDataSetChanged();
+
+                    recyclerView.setAdapter(adapterUsers);
                 }
             }
 
