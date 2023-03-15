@@ -99,79 +99,37 @@ public class HomeFragment extends Fragment {
         });
     }
 
-//    private void searchPosts(String searchQuery){
-//        //path of all posts
-//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
-//        //get all data from this ref
-//        ref.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                postList.clear();
-//                for(DataSnapshot ds: snapshot.getChildren()){
-//                    ModelPost modelPost = ds.getValue(ModelPost.class);
-//
-//                    if (modelPost.getpTitle().toLowerCase().contains(searchQuery.toLowerCase()) ||
-//                            modelPost.getpDescr().toLowerCase().contains(searchQuery.toLowerCase())){
-//                        postList.add(modelPost);
-//                    }
-//
-//                    //adapter
-//                    adapterPosts = new AdapterPosts(getActivity(), postList);
-//                    //set adapter to recyclerview
-//                    recyclerView.setAdapter(adapterPosts);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                //in case of error
-//                Toast.makeText(getActivity(), ""+error.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//    }
+    private void searchPosts(String searchQuery){
+        //path of all posts
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
+        //get all data from this ref
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                postList.clear();
+                for(DataSnapshot ds: snapshot.getChildren()){
+                    ModelPost modelPost = ds.getValue(ModelPost.class);
 
-    //Video 9 code, Video 8 needed in order for this to work
-//    private void searchUsers (String query) {
-//                final firebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
-//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-//
-//        ref.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                userList.clear();
-//                for (DataSnapshot ds : snapshot.getChildren()) {
-//                    ModelUser modelUser = ds.getValue(ModelUser.class);
-//
-//                    if (!modelUser.getUid().equals(fUser.getUid())) {
-//
-//                        if(modelUser.getName().toLowerCase().contains(query.toLowerCase()) ||
-//                                modelUser.getEmail().toLowerCase().contains(query.toLowerCase())) {
-//                                userList.add(modelUser);
-//                        }
-//                    }
-//
-//                    adapterUsers = new AdapterUsers(getActivity(), userList);
-//
-//                    adapterUsers.notifyDataSetChanged();
-//
-//                    recyclerView.setAdapter(adaptUsers);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        }};
-//}
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        })
-//    }
+                    if (modelPost.getpTitle().toLowerCase().contains(searchQuery.toLowerCase()) ||
+                            modelPost.getpDescr().toLowerCase().contains(searchQuery.toLowerCase())){
+                        postList.add(modelPost);
+                    }
+
+                    //adapter
+                    adapterPosts = new AdapterPosts(getActivity(), postList);
+                    //set adapter to recyclerview
+                    recyclerView.setAdapter(adapterPosts);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //in case of error
+                Toast.makeText(getActivity(), ""+error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 
     private void checkUserStatus () {
         FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -223,30 +181,32 @@ public class HomeFragment extends Fragment {
           MenuItem item = menu.findItem(R.id.action_search);
           SearchView searchView = (SearchView)MenuItemCompat.getActionView(item);
 
-//          searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
-//          @override
-//    public boolean onQueryTextSubmit(String s){
-//       if(!TextUtils.isEmpty(s)){
-//          searchPosts(s); }
-//      else{
-//          loadPosts();
-//          }
-//
-//        return false;
-//    }
-//         @override
-//          public boolean onQueryTextChange(String s) {
-//          if(!TextUtils.isEmpty(s)){
-//           searchPosts(s); }
-//         else{
-//        loadPosts();
-//         }
-//          return false;
-//          }
-//         });
+          searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+          @Override
+          public boolean onQueryTextSubmit(String s){
+              if(!TextUtils.isEmpty(s)){
+                  searchPosts(s);
+              }
+              else {
+                  loadPosts();
+              }
 
+              return false;
+          }
+         @Override
+         public boolean onQueryTextChange(String s) {
+              if(!TextUtils.isEmpty(s)){
+                  searchPosts(s);
+              }
+              else{
+                  loadPosts();
+              }
+              return false;
+          }
 
-        super.onCreateOptionsMenu(menu, inflater);
+        });
+
+          super.onCreateOptionsMenu(menu, inflater);
     }
 
 
