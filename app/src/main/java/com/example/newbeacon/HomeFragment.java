@@ -172,6 +172,7 @@ public class HomeFragment extends Fragment {
 //            }
 //        })
 //    }
+
     private void checkUserStatus () {
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
@@ -189,39 +190,39 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
-//        inflater.inflate(R.menu.menu_main, menu);
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+        inflater.inflate(R.menu.menu_main, menu);
+
+        //SearchView
+//        MenuItem item= menu.findItem(R.id.action_search);
+//        SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+
+        //search listener
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String s) {
+//                //called when user presses search button from keyboard
+//                //if search query is not empty then search
+//                if(!TextUtils.isEmpty(s.trim())){
+//                    searchUsers(s);
+//                }
+//                else{
+//                    //search text empty, get all users
+//                    getAllUsers();
+//                }
+//                return false;
+//            }
 //
-//        //SearchView
-////        MenuItem item= menu.findItem(R.id.action_search);
-////        SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
-//
-//        //search listener
-////        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-////            @Override
-////            public boolean onQueryTextSubmit(String s) {
-////                //called when user presses search button from keyboard
-////                //if search query is not empty then search
-////                if(!TextUtils.isEmpty(s.trim())){
-////                    searchUsers(s);
-////                }
-////                else{
-////                    //search text empty, get all users
-////                    getAllUsers();
-////                }
-////                return false;
-////            }
-////
-////            @Override
-////            public boolean onQueryTextChange(String s) {
-////                //called when user presses any single letter
-////                return false;
-////            }
-// //       });
-//          MenuItem item = menu.findItem(R.id.action_search);
-//          SearchView searchView = (SearchView)MenuItemCompat.getActionView(item);
-//
+//            @Override
+//            public boolean onQueryTextChange(String s) {
+//                //called when user presses any single letter
+//                return false;
+//            }
+ //       });
+          MenuItem item = menu.findItem(R.id.action_search);
+          SearchView searchView = (SearchView)MenuItemCompat.getActionView(item);
+
 //          searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
 //          @override
 //    public boolean onQueryTextSubmit(String s){
@@ -242,11 +243,11 @@ public class HomeFragment extends Fragment {
 //         }
 //          return false;
 //          }
- //        });
- //
-//
-//        super.onCreateOptionsMenu(menu, inflater);
-//    }
+//         });
+
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
 
     @Override
