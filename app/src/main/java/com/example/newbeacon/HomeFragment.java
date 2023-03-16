@@ -191,9 +191,12 @@ public class HomeFragment extends Fragment {
             firebaseAuth.signOut();
             checkUserStatus();
         }
-
-        if (id == R.id.action_add_post){
+        else if (id == R.id.action_add_post){
             startActivity(new Intent(getActivity(), AddPostActivity.class));
+        }
+        else if (id==R.id.action_settings) {
+            //goes to settings activity
+            startActivity(new Intent(getActivity(), SettingsActivity.class));
         }
 
         return super.onOptionsItemSelected(item);

@@ -40,6 +40,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:20.1.0'
     implementation 'com.google.firebase:firebase-database:20.1.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.google.firebase:firebase-messaging:23.1.2'
 
     // google sign in library from https://firebase.google.com/docs/auth/android/google-signin#java
     // Import the BoM for the Firebase platform
