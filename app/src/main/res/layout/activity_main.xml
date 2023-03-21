@@ -72,22 +72,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/googleSignInBtn"
-        android:layout_below="@id/loginopt"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="25dp"
         android:text="Forgot Password?"
         android:textAlignment="center"
-        android:textColor="#07bbf2" />
-
+        android:textColor="#07bbf2"
+        app:layout_constraintBottom_toTopOf="@+id/googleSignInBtn"
+        app:layout_constraintTop_toBottomOf="@+id/loginopt" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/googleSignInBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
-
-    </com.google.android.gms.common.SignInButton>
+        android:layout_centerHorizontal="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.5" />
 
     <LinearLayout
         android:id="@+id/loginopt"
@@ -95,7 +95,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/signinbtn"
         android:layout_marginTop="20dp"
-        android:gravity="center">
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/signinbtn">
 
         <TextView
             android:id="@+id/dont_haveaccounttxt"
@@ -103,17 +104,17 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:text="Don't have an account?"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/signuptxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/dont_haveaccounttxt"
             android:text="Sign up"
-            android:textColor="#07bbf2" />
+            android:textColor="#07bbf2"
+            app:layout_constraintLeft_toRightOf="@id/dont_haveaccounttxt"
+            app:layout_constraintTop_toTopOf="@id/dont_haveaccounttxt" />
     </LinearLayout>
 
 </RelativeLayout>

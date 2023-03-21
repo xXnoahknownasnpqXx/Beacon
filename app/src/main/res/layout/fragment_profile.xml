@@ -79,7 +79,6 @@
         </RelativeLayout>
     </ScrollView>
 
-    <!-- TODO: Update blank fragment layout -->
 
     <!-- Floating Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -6,14 +6,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.newbeacon.notifications.Token;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -21,7 +26,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     private ActionBar actionBar;
 
-
+    String mUID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,20 @@ public class DashboardActivity extends AppCompatActivity {
         ft1.replace(R.id.content, fragment1, "");
         ft1.commit();
 
+        //update token
+        updateToken(FirebaseMessaging.getInstance().getToken().toString());
+    }
+
+    public void updateToken(String token){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
+        Token mToken = new Token(token);
+        ref.child(mUID).setValue(mToken);
+    }
+
+    @Override
+    protected void onResume() {
+        checkUserStatus();
+        super.onResume();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener selectedListener =
@@ -88,7 +107,11 @@ public class DashboardActivity extends AppCompatActivity {
             finish();
         }
         else {
-            //profileView.setText(user.getEmail());
+            mUID = user.getUid();
+            SharedPreferences sp = getSharedPreferences("SP_USER", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("Current_USERID", mUID);
+            editor.apply();
         }
     }
 
@@ -103,21 +126,4 @@ public class DashboardActivity extends AppCompatActivity {
         checkUserStatus();
         super.onStart();
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//
-//        int id = item.getItemId();
-//        if (id == R.id.action_logout){
-//            firebaseAuth.signOut();
-//            checkUserStatus();
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 }

@@ -18,6 +18,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,9 +28,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -49,6 +52,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class AddPostActivity extends AppCompatActivity {
 
@@ -219,6 +223,14 @@ public class AddPostActivity extends AppCompatActivity {
                                                 descriptionEt.setText("");
                                                 imageIv.setImageURI(null);
                                                 image_rui = null;
+
+                                                //send notification
+                                                prepareNotification(
+                                                        ""+timeStamp,
+                                                        ""+ name + " added a new post",
+                                                        ""+title+ "\n"+description,
+                                                        "PostNotification",
+                                                        "POST");
                                             }
                                         });
                             }
@@ -248,6 +260,7 @@ public class AddPostActivity extends AppCompatActivity {
             hashMap.put("pDescr", description);
             hashMap.put("pImage", "noImage");
             hashMap.put("pTime", timeStamp);
+            hashMap.put("Likes", "0");
 
             //path to store post data
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
@@ -263,6 +276,13 @@ public class AddPostActivity extends AppCompatActivity {
                             descriptionEt.setText("");
                             imageIv.setImageURI(null);
                             image_rui = null;
+
+                            prepareNotification(
+                                    ""+timeStamp,
+                                    ""+ name + " added a new post",
+                                    ""+title+ "\n"+description,
+                                    "PostNotification",
+                                    "POST");
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -276,6 +296,7 @@ public class AddPostActivity extends AppCompatActivity {
         }
     }
 
+    //call this whenever you publish a post
     private void prepareNotification(String pID, String title, String description, String notificationType, String notificationTopic){
         //prepare data for notification
 
@@ -313,14 +334,29 @@ public class AddPostActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
+                        Log.d("FCM_RESPONSE", "onResponse: " + response.toString());
                     }
-                }, new Response.ErrorListener() {
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //error occurs
+                        Toast.makeText(AddPostActivity.this, ""+ error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+        }){
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                //put required headers
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", "key= AAAAfCAVQ2s:APA91bHfuYonjazZtYd_IAdqwBLaQpWAUQnAzUi8v1iCu7iyp0f2Ggs253CgOoZMtltMXx-f8VYzolK-fjolGmRc5rLHp17wX5rboRtYmO9C22NqbZav1m5q_SB1EjlmqXbF4l4m5HA8");
 
+                return headers;
             }
-        });
+        };
+
+        //enqueue the volley request
+        Volley.newRequestQueue(this).add(jsonObjectRequest);
     }
 
     private void showImagePickDialog() {
