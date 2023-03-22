@@ -95,6 +95,7 @@ public class HomeFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
                 //in case of error
                 Toast.makeText(getActivity(), ""+error.getMessage(), Toast.LENGTH_SHORT).show();
+                //TODO FIGURE OUT WHY THIS IS CAUSING PROBLEMS
             }
         });
     }

@@ -14,6 +14,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -180,20 +181,21 @@ public class FirebaseMessaging extends FirebaseMessagingService {
         notificationManager.notify(j,builder.build());
     }
 
-//    @Override
-//    public void onNewToken(@NonNull String token) {
-//        super.onNewToken(token);
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        if (user != null) {
-//            updateToken(token);
-//        }
-//    }
-//
-//    private void updateToken(String tokenRefresh){
-//
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
-//        Token token = new Token(tokenRefresh);
-//        ref.child(user.getUid()).setValue(token);
-//    }
+    @Override
+    public void onNewToken(@NonNull String token) {
+        super.onNewToken(token);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user!=null) {
+            updateToken(token); // TODO FIGURE THIS SHIT OUT
+        }
+    }
+
+    private void updateToken(String tokenRefresh){
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
+        Token token = new Token(tokenRefresh);
+        ref.child(user.getUid()).setValue(token);
+    }
 }
