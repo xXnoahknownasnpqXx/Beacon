@@ -48,14 +48,14 @@ public class DashboardActivity extends AppCompatActivity {
         ft1.commit();
 
         //update token
-        updateToken(FirebaseMessaging.getInstance().getToken().toString());
+        // updateToken(FirebaseMessaging.getInstance().getToken().toString());
     }
 
-    public void updateToken(String token){
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
-        Token mToken = new Token(token);
-        ref.child(mUID).setValue(mToken);
-    }
+//    public void updateToken(String token){
+//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
+//        Token mToken = new Token(token);
+//        ref.child(mUID).setValue(mToken);
+//    }
 
     @Override
     protected void onResume() {
