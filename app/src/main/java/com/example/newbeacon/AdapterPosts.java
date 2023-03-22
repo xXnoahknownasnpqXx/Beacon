@@ -73,7 +73,7 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         String pImage = postList.get(position).getpImage();
         String pTimeStamp = postList.get(position).getpTime();
         String pLikes =postList.get(position).getpLikes();
-        String pComments =postList.get(position).getpComments();
+        // String pComments =postList.get(position).getpComments();
 
 
         //convert timestamp to dd/mm/yyy hh:mm am/pm
@@ -87,7 +87,7 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         myHolder.pTitleTv.setText(pTitle);
         myHolder.pDescriptionTv.setText(pDescr);
         myHolder.pLikesTv.setText(pLikes + " Likes");
-        myHolder.pCommentsTv.setText(pComments + " Comments");
+        // myHolder.pCommentsTv.setText(pComments + " Comments");
 
 //        setLikes(myHolder, pId)
 
@@ -134,15 +134,15 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                 Toast.makeText(context, "Like", Toast.LENGTH_SHORT).show();
             }
         });
-        myHolder.commentBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //start PostDetailActivity
-                Intent intent = new Intent(context, PostDetailActivity.class);
-                intent.putExtra("postId", pId); //will get detail of post using this id, its id of the post clicked
-                context.startActivity(intent);
-            }
-        });
+//        myHolder.commentBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //start PostDetailActivity
+//                Intent intent = new Intent(context, PostDetailActivity.class);
+//                intent.putExtra("postId", pId); //will get detail of post using this id, its id of the post clicked
+//                context.startActivity(intent);
+//            }
+//        });
         myHolder.shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -278,9 +278,13 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
         //views from row_posts.xml
         ImageView uPictureIv, pImageIv;
-        TextView uNameTv, pTimeTv, pTitleTv, pDescriptionTv, pLikesTv, pCommentsTv;
+        TextView uNameTv, pTimeTv, pTitleTv, pDescriptionTv, pLikesTv
+                //pCommentsTv
+                ;
         ImageButton moreBtn;
-        Button likeBtn, commentBtn, shareBtn;
+        Button likeBtn,
+                //commentBtn,
+        shareBtn;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
@@ -293,10 +297,10 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             pTitleTv = itemView.findViewById(R.id.pTitleTv);
             pDescriptionTv = itemView.findViewById(R.id.pDescriptionTv);
             pLikesTv = itemView.findViewById(R.id.pLikesTv);
-            pCommentsTv = itemView.findViewById(R.id.pCommentsTv);
+            //pCommentsTv = itemView.findViewById(R.id.pCommentsTv);
             moreBtn = itemView.findViewById(R.id.moreBtn);
             likeBtn = itemView.findViewById(R.id.likeBtn);
-            commentBtn = itemView.findViewById(R.id.commentBtn);
+            // commentBtn = itemView.findViewById(R.id.commentBtn);
             shareBtn = itemView.findViewById(R.id.shareBtn);
 
         }

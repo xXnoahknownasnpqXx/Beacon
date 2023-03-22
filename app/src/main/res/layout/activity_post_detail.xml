@@ -75,7 +75,8 @@
                             android:minHeight="48dp"
                             android:layout_height="wrap_content"
                             android:background="@null"
-                            android:src="@drawable/ic_more_black"/>
+                            android:src="@drawable/ic_more_black"
+                            tools:ignore="ContentDescription" />
 
                     </LinearLayout>
 

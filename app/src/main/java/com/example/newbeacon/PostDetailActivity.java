@@ -32,7 +32,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Comment;
+// import org.w3c.dom.Comment;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -44,7 +44,7 @@ public class PostDetailActivity extends AppCompatActivity {
     //to get detail of user and post
     String myUid, myEmail, myName, myDp, postId, pLikes, hisDp, hisName;
 
-    boolean mProcessComment = false;
+    // boolean mProcessComment = false;
     boolean mProcessLike = false;
 
     //progress bar
@@ -53,13 +53,13 @@ public class PostDetailActivity extends AppCompatActivity {
 
     //views
     ImageView uPictureIv, pImageIv;
-    TextView uNameTv, pTimeTiv, pTitleTv, pDescriptionTv, pLikesTv, pCommentsTv;
+    TextView uNameTv, pTimeTiv, pTitleTv, pDescriptionTv, pLikesTv; // pCommentsTv
     ImageButton moreBtn;
     Button likeBtn, shareBtn;
     LinearLayout profileLayout;
 
     //add comments views
-    EditText commentEt;
+    //EditText commentEt;
     ImageButton sendBtn;
     ImageView cAvatarIv;
 
@@ -255,7 +255,7 @@ public class PostDetailActivity extends AppCompatActivity {
                     String uid = "" + ds.child("uid").getValue();
                     String uEmail = "" + ds.child("uEmail").getValue();
                     hisName = "" + ds.child("uName").getValue();
-                    String commentCount = "" + ds.child("pComments").getValue();
+                    // String commentCount = "" + ds.child("pComments").getValue();
 
 
                     //convert timestamp to dd/mm/yyy hh:mm am/pm
@@ -268,7 +268,7 @@ public class PostDetailActivity extends AppCompatActivity {
                     pDescriptionTv.setText(pDescr);
                     pLikesTv.setText(pLikes + " Likes");
                     pTimeTiv.setText(pTime);
-                    pCommentsTv.setText(commentCount + " Comments");
+                    // pCommentsTv.setText(commentCount + " Comments");
 
                     uNameTv.setText(hisName);
 
