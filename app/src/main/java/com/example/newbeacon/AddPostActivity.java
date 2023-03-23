@@ -14,6 +14,8 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -51,6 +53,7 @@ import com.google.firebase.storage.UploadTask;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -152,29 +155,39 @@ public class AddPostActivity extends AppCompatActivity {
 
                 if(image_rui == null){
                     //post without image
-                    uploadData(title, description, "noImage");
+                    uploadData(title, description);
+                    Intent intent = new Intent(AddPostActivity.this, DashboardActivity.class);
+                    startActivity(intent);
                 }
                 else{
                     //post with image
-                    uploadData(title, description, String.valueOf(image_rui));
+                    uploadData(title, description);
+                    Intent intent = new Intent(AddPostActivity.this, DashboardActivity.class);
+                    startActivity(intent);
                 }
             }
         });
     }
 
-    private void uploadData(String title, String description, String uri) {
+    private void uploadData(final String title, final String description) {
         pd.setMessage("Publishing Post");
         pd.show();
 
         //for post-image name, post-id, post-publish-time
-        String timeStamp = String.valueOf(System.currentTimeMillis());
+        final String timeStamp = String.valueOf(System.currentTimeMillis());
 
         String filePathandName = "Posts/" + "post_" + timeStamp;
 
-        if(!uri.equals("noImage")){
-            //post with image
+        if (imageIv.getDrawable() != null){
+            Bitmap bitmap = ((BitmapDrawable)imageIv.getDrawable()).getBitmap();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            byte[] data = baos.toByteArray();
+
+
             StorageReference ref = FirebaseStorage.getInstance().getReference().child(filePathandName);
-            ref.putFile(Uri.parse(uri))
+            ref.putBytes(data)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -210,19 +223,23 @@ public class AddPostActivity extends AppCompatActivity {
                                                 //added in database
                                                 pd.dismiss();
                                                 Toast.makeText(AddPostActivity.this, "Post Published", Toast.LENGTH_SHORT).show();
+                                                titleEt.setText("");
+                                                descriptionEt.setText("");
+                                                imageIv.setImageURI(null);
+                                                image_rui = null;
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                            //failed adding post in database
+                                                //failed adding post in database
                                                 pd.dismiss();
                                                 Toast.makeText(AddPostActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                                                 //reset views
-                                                titleEt.setText("");
-                                                descriptionEt.setText("");
-                                                imageIv.setImageURI(null);
-                                                image_rui = null;
+//                                                titleEt.setText("");
+//                                                descriptionEt.setText("");
+//                                                imageIv.setImageURI(null);
+//                                                image_rui = null;
 
                                                 //send notification
                                                 prepareNotification(
@@ -244,7 +261,6 @@ public class AddPostActivity extends AppCompatActivity {
                             Toast.makeText(AddPostActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
-
         }
         else {
             //post without image
