@@ -14,8 +14,9 @@ public class FirebaseService extends FirebaseMessagingService {
     @Override
     public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
+        if (user!=null) {
             updateToken(token);
         }
     }
@@ -26,5 +27,7 @@ public class FirebaseService extends FirebaseMessagingService {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
         Token token = new Token(tokenRefresh);
         ref.child(user.getUid()).setValue(token);
+
+        // TODO FIGURE THIS SHIT OUT
     }
 }

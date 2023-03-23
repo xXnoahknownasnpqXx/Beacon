@@ -11,8 +11,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.newbeacon.notifications.Token;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -48,14 +51,27 @@ public class DashboardActivity extends AppCompatActivity {
         ft1.commit();
 
         //update token
-        updateToken(FirebaseMessaging.getInstance().getToken().toString());
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (!task.isSuccessful()){
+                    Toast.makeText(DashboardActivity.this, "Could not register token", Toast.LENGTH_SHORT).show();
+                }
+
+                String token = task.getResult();
+                Token token1 = new Token(token);
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
+                ref.child(mUID).setValue(token);
+            }
+        });
+        // TODO FIGURE THIS SHIT OUT
     }
 
-    public void updateToken(String token){
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
-        Token mToken = new Token(token);
-        ref.child(mUID).setValue(mToken);
-    }
+//    private void updateToken(String tokenRefresh){
+//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
+//        Token token = new Token(tokenRefresh);
+//        ref.child(mUID).setValue(token);
+//    }
 
     @Override
     protected void onResume() {
