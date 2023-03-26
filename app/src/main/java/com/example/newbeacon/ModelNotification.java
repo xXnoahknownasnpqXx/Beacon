@@ -3,7 +3,12 @@ package com.example.newbeacon;
 public class ModelNotification {
     String pId, timestamp, pUid, notification, sUid, sName, sEmail, sImage;
 
-    public ModelNotification(String pId, String timestamp, String pUid, String notification, String sUid, String sName, String sEmail, String sImage) {
+    // empty constructor required for Firebase
+    public ModelNotification() {
+    }
+
+    public ModelNotification(
+            String pId, String timestamp, String pUid, String notification, String sUid, String sName, String sEmail, String sImage) {
         this.pId = pId;
         this.timestamp = timestamp;
         this.pUid = pUid;

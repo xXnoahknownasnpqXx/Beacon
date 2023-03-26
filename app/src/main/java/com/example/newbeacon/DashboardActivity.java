@@ -51,19 +51,19 @@ public class DashboardActivity extends AppCompatActivity {
         ft1.commit();
 
         //update token
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
-            @Override
-            public void onComplete(@NonNull Task<String> task) {
-                if (!task.isSuccessful()){
-                    Toast.makeText(DashboardActivity.this, "Could not register token", Toast.LENGTH_SHORT).show();
-                }
-
-                String token = task.getResult();
-                Token token1 = new Token(token);
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
-                ref.child(mUID).setValue(token);
-            }
-        });
+//        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+//            @Override
+//            public void onComplete(@NonNull Task<String> task) {
+//                if (!task.isSuccessful()){
+//                    Toast.makeText(DashboardActivity.this, "Could not register token", Toast.LENGTH_SHORT).show();
+//                }
+//
+//                String token = task.getResult();
+//                Token token1 = new Token(token);
+//                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
+//                ref.child(mUID).setValue(token);
+//            }
+//        });
         // TODO FIGURE THIS SHIT OUT
     }
 
