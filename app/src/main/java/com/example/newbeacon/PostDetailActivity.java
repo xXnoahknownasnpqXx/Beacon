@@ -116,14 +116,14 @@ public class PostDetailActivity extends AppCompatActivity {
         actionBar.setSubtitle("SignedIn as: "+myEmail);
 
         //send comment button click
-        sendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-
-
-        });
+//        sendBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//
+//
+//        });
 
         //like button click handle
         likeBtn.setOnClickListener(new View.OnClickListener() {
