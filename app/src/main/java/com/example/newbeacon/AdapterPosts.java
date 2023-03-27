@@ -152,10 +152,15 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                         if (mProcessLike) {
                             if (dataSnapshot.child(postIde).hasChild(myUid)) {
                                 postsRef.child(postIde).child("pLikes").setValue("" + (pLikes - 1));
-                                likesRef.child(postIde).child(myUid).setValue("Liked");
+                                likesRef.child(postIde).child(myUid).removeValue();
                                 mProcessLike = false;
 
                                 addToHisNotifications("" + uid, "" + pId, "Liked your post");
+                            }
+                            else {
+                                postsRef.child(postIde).child("pLikes").setValue(""+(pLikes + 1));
+                                likesRef.child(postIde).child(myUid).setValue("Liked");
+                                mProcessLike = false;
                             }
                         }
                     }
@@ -192,8 +197,10 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.child(postKey).hasChild(myUid)) {
+                    holder.likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_liked, 0,0,0);
                     holder.likeBtn.setText("Liked");
                 } else {
+                    holder.likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_like_black, 0,0,0);
                     holder.likeBtn.setText("Like");
                 }
             }
