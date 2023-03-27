@@ -173,15 +173,7 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                 //will implement later
             }
         });
-//        myHolder.commentBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //start PostDetailActivity
-//                Intent intent = new Intent(context, PostDetailActivity.class);
-//                intent.putExtra("postId", pId); //will get detail of post using this id, its id of the post clicked
-//                context.startActivity(intent);
-//            }
-//        });
+
         myHolder.shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
