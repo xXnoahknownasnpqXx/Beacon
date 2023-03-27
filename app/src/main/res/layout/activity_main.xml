@@ -71,14 +71,11 @@
         android:id="@+id/recoverpasswordtxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/googleSignInBtn"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginTop="5sp"
         android:text="Forgot Password?"
         android:textAlignment="center"
         android:textColor="#07bbf2"
-        app:layout_constraintBottom_toTopOf="@+id/googleSignInBtn"
-        app:layout_constraintTop_toBottomOf="@+id/loginopt" />
+        android:layout_below="@id/loginopt"        />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/googleSignInBtn"
@@ -86,6 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="75sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.5" />
 
