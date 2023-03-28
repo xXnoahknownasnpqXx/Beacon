@@ -1,5 +1,8 @@
 package com.example.newbeacon;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -72,6 +75,8 @@ public class AddPostActivity extends AppCompatActivity {
 
     String[] cameraPermissions;
     String[] storagePermissions;
+
+    private static final String TAG = "PERMISSION_TAG";
 
     EditText titleEt, descriptionEt;
     ImageView imageIv;
@@ -212,6 +217,7 @@ public class AddPostActivity extends AppCompatActivity {
                                 hashMap.put("pDescr", description);
                                 hashMap.put("pImage", downloadUri);
                                 hashMap.put("pTime", timeStamp);
+                                hashMap.put("pLikes", "0");
 
                                 //path to store post data
                                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
@@ -374,7 +380,23 @@ public class AddPostActivity extends AppCompatActivity {
         //enqueue the volley request
         Volley.newRequestQueue(this).add(jsonObjectRequest);
     }
+    private ActivityResultLauncher<String> permissionLauncherSingle = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(),
+            new ActivityResultCallback<Boolean>() {
+                @Override
+                public void onActivityResult(Boolean isGranted) {
+                    Log.d(TAG,"onActivityResult: isGranted: "+isGranted);
 
+                    if (isGranted){
+                        pickFromCamera();
+                    }
+                    else {
+                        Log.d(TAG,"onActivityResult: Permission denied...");
+                        //Toast.makeText(ProfileFragment.this,"permission denied...", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+    );
     private void showImagePickDialog() {
         String[] options = {"Camera", "Gallery"};
 
@@ -387,11 +409,13 @@ public class AddPostActivity extends AppCompatActivity {
                 // item click handle
                 if (which == 0) {
                     // camera clicked
-                    if (!checkCameraPermission()){
-                        requestCameraPermission();
-                    } else{
-                        pickFromCamera();
-                    }
+                    //if (!checkCameraPermission()){
+                    //    requestCameraPermission();
+                    //} else{
+                    //    pickFromCamera();
+                    //}
+                    String permission = Manifest.permission.CAMERA;
+                    permissionLauncherSingle.launch(permission);
                 }
                 if (which == 1) {
                     // gallery closed

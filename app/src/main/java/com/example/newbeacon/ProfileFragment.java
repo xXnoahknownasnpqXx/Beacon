@@ -311,6 +311,24 @@ public class ProfileFragment extends Fragment {
             }
     );
 
+    private ActivityResultLauncher<String> permissionLauncherSingle2 = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(),
+            new ActivityResultCallback<Boolean>() {
+                @Override
+                public void onActivityResult(Boolean isGranted) {
+                    Log.d(TAG,"onActivityResult: isGranted: "+isGranted);
+
+                    if (isGranted){
+                        pickFromGallery();
+                    }
+                    else {
+                        Log.d(TAG,"onActivityResult: Permission denied...");
+                        //Toast.makeText(ProfileFragment.this,"permission denied...", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+    );
+
     private void showImagePicDialog() {
         //show dialog containing options camera and gallery to pick the image
 
@@ -338,12 +356,14 @@ public class ProfileFragment extends Fragment {
                     permissionLauncherSingle.launch(permission);
                 } else if (i == 1) {
                     //Gallery Picked
-                    if (!checkStoragePermission()){
-                        requestStoragePermission();
-                    }
-                    else {
-                        pickFromGallery();
-                    }
+                    //if (!checkStoragePermission()){
+                    //    requestStoragePermission();
+                    //}
+                    //else {
+                    //    pickFromGallery();
+                    //}
+                    String permission2 = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+                    permissionLauncherSingle2.launch(permission2);
                 }
             }
         });
