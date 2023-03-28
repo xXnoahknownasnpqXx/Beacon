@@ -10,6 +10,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -55,6 +56,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.security.Key;
 import java.util.HashMap;
 
@@ -78,15 +80,10 @@ public class ProfileFragment extends Fragment {
     //Progress dialog
     ProgressDialog pd;
 
-    //Permissions constants
-    private static final int CAMERA_REQUEST_CODE = 100;
-    private static final int STORAGE_REQUEST_CODE = 200;
     private static final int IMAGE_PICK_GALLERY_CODE = 300;
     private static final int IMAGE_PICK_CAMERA_CODE = 400;
     //arrays of permissions to be requested
     private static final String TAG = "PERMISSION_TAG";
-    String cameraPermissions[];
-    String storagePermissions[];
 
     //uri of picked image
     Uri image_uri;
@@ -111,11 +108,6 @@ public class ProfileFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("Users");
         storageReference = FirebaseStorage.getInstance().getReference();
-
-        //init arrays of permissions
-        //cameraPermissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        cameraPermissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        storagePermissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
         avatarIv = view.findViewById(R.id.avatarIv);
         nameTv = view.findViewById(R.id.nameTv);
@@ -169,38 +161,6 @@ public class ProfileFragment extends Fragment {
         });
 
         return view;
-    }
-
-    private boolean checkStoragePermission(){
-        boolean result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
-        return result;
-    }
-
-    private void requestStoragePermission(){
-        requestPermissions(storagePermissions, STORAGE_REQUEST_CODE);
-    }
-
-
-    private boolean checkCameraPermission(){
-
-        boolean result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
-
-
-        boolean result1 = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                == (PackageManager.PERMISSION_GRANTED);
-        return result && result1;
-    }
-
-    private void requestCameraPermission(){
-        //requestPermissions(cameraPermissions, CAMERA_REQUEST_CODE);
-        //new ActivityResultContracts.RequestPermission(),
-        //new ActivityResultCallback<Boolean>(){
-        //    @Override
-         //   public void onActivityResult(Boolean result){
-
-         //   }
-        //};
-
     }
 
     private void showEditProfileDialog() {
@@ -323,7 +283,6 @@ public class ProfileFragment extends Fragment {
                     }
                     else {
                         Log.d(TAG,"onActivityResult: Permission denied...");
-                        //Toast.makeText(ProfileFragment.this,"permission denied...", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -345,25 +304,15 @@ public class ProfileFragment extends Fragment {
             public void onClick(DialogInterface dialogInterface, int i) {
                 //handle dialog item clicks
                 if (i == 0){
-                    //Camera clicked
-                    //if (!checkCameraPermission()){
-                    //    requestCameraPermission();
-                    //}
-                    //else {
-                    //    pickFromCamera();
-                    //}
+
                     String permission = Manifest.permission.CAMERA;
                     permissionLauncherSingle.launch(permission);
                 } else if (i == 1) {
-                    //Gallery Picked
-                    //if (!checkStoragePermission()){
-                    //    requestStoragePermission();
-                    //}
-                    //else {
-                    //    pickFromGallery();
-                    //}
-                    String permission2 = Manifest.permission.WRITE_EXTERNAL_STORAGE;
-                    permissionLauncherSingle2.launch(permission2);
+
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), IMAGE_PICK_GALLERY_CODE);
                 }
             }
         });
@@ -371,52 +320,16 @@ public class ProfileFragment extends Fragment {
         builder.create().show();
 
     }
-    //first check firebase storage rules
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
-            case CAMERA_REQUEST_CODE:{
-                if (grantResults.length > 0){
-                    boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                    boolean writeStorageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-                    if (cameraAccepted && writeStorageAccepted){
-                        pickFromCamera();
-                    }else{
-                        Toast.makeText(getActivity(), "Please enable camera & storage permission", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-            break;
-            case STORAGE_REQUEST_CODE:{
-
-
-                if (grantResults.length > 0){
-                    boolean writeStorageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-                    if (writeStorageAccepted){
-                        pickFromGallery();
-                    }else{
-                        Toast.makeText(getActivity(), "Please enable storage permission", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-            }
-            break;
-        }
-
-        // super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         //this method wil be called after picking image form camera or gallery
-        if (resultCode == RESULT_OK){
+        if (resultCode == RESULT_OK && data != null && data.getData() != null){
             if (requestCode == IMAGE_PICK_GALLERY_CODE){
                 //image is picked from gallery, get uri of image
-                image_uri = data.getData();
+                image_uri = data.getData(); //TODO review the last video to see if it can be reused
 
+                Picasso.get().load(image_uri).into(avatarIv);
                 uploadProfileCoverPhoto(image_uri);
             }
             if (requestCode == IMAGE_PICK_CAMERA_CODE){
