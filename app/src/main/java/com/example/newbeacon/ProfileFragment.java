@@ -80,10 +80,14 @@ public class ProfileFragment extends Fragment {
     //Progress dialog
     ProgressDialog pd;
 
+    private static final int CAMERA_REQUEST_CODE = 100;
+    private static final int STORAGE_REQUEST_CODE = 200;
     private static final int IMAGE_PICK_GALLERY_CODE = 300;
     private static final int IMAGE_PICK_CAMERA_CODE = 400;
     //arrays of permissions to be requested
     private static final String TAG = "PERMISSION_TAG";
+    String cameraPermissions[];
+    String storagePermissions[];
 
     //uri of picked image
     Uri image_uri;
@@ -108,6 +112,9 @@ public class ProfileFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("Users");
         storageReference = FirebaseStorage.getInstance().getReference();
+
+        cameraPermissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        storagePermissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
         avatarIv = view.findViewById(R.id.avatarIv);
         nameTv = view.findViewById(R.id.nameTv);
@@ -162,6 +169,73 @@ public class ProfileFragment extends Fragment {
 
         return view;
     }
+
+    private boolean checkStoragePermission(){
+        boolean result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
+        return result;
+    }
+
+    private void requestStoragePermission(){
+        requestPermissions(storagePermissions, STORAGE_REQUEST_CODE);
+    }
+
+
+    private boolean checkCameraPermission(){
+
+        boolean result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
+
+
+        boolean result1 = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == (PackageManager.PERMISSION_GRANTED);
+        return result && result1;
+    }
+
+    private void requestCameraPermission(){
+        //requestPermissions(cameraPermissions, CAMERA_REQUEST_CODE);
+        //new ActivityResultContracts.RequestPermission(),
+        //new ActivityResultCallback<Boolean>(){
+        //    @Override
+        //   public void onActivityResult(Boolean result){
+
+        //   }
+        //};
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case CAMERA_REQUEST_CODE:{
+                if (grantResults.length > 0){
+                    boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    boolean writeStorageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                    if (cameraAccepted && writeStorageAccepted){
+                        pickFromCamera();
+                    }else{
+                        Toast.makeText(getActivity(), "Please enable camera & storage permission", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+            break;
+            case STORAGE_REQUEST_CODE:{
+
+
+                if (grantResults.length > 0){
+                    boolean writeStorageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                    if (writeStorageAccepted){
+                        pickFromGallery();
+                    }else{
+                        Toast.makeText(getActivity(), "Please enable storage permission", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+            break;
+        }
+
+        // super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
 
     private void showEditProfileDialog() {
         //Options shown
@@ -342,6 +416,7 @@ public class ProfileFragment extends Fragment {
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+
 
     private void uploadProfileCoverPhoto (Uri uri){
         //show progress

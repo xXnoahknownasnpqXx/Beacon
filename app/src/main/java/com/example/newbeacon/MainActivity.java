@@ -96,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = gsc.getSignInIntent();
 
                 startActivityForResult(intent, RC_SIGN_IN);
-                //signIn();
             }
         });
 
@@ -236,11 +235,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return super.onSupportNavigateUp();
-    }
-
-    public void signIn(){
-        Intent signInIntent = gsc.getSignInIntent();
-        startActivityForResult(signInIntent, 1000);
     }
 
     @Override
