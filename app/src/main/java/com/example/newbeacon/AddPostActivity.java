@@ -52,6 +52,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -408,22 +409,16 @@ public class AddPostActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 // item click handle
                 if (which == 0) {
-                    // camera clicked
-                    //if (!checkCameraPermission()){
-                    //    requestCameraPermission();
-                    //} else{
-                    //    pickFromCamera();
-                    //}
+
                     String permission = Manifest.permission.CAMERA;
                     permissionLauncherSingle.launch(permission);
                 }
                 if (which == 1) {
                     // gallery closed
-                    if (!checkStoragePermission()){
-                        requestStoragePermission();
-                    } else {
-                        pickFromGallery();
-                    }
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), IMAGE_PICK_GALLERY_CODE);
                 }
             }
         });
@@ -449,34 +444,6 @@ public class AddPostActivity extends AppCompatActivity {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT,image_rui);
         startActivityForResult(intent, IMAGE_PICK_CAMERA_CODE);
-    }
-
-    private boolean checkStoragePermission(){
-        // check if storage permission is enabled or not
-        // return true if enabled
-        // return false otherwise
-        boolean result = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
-        return result;
-    }
-
-    private void requestStoragePermission() {
-        ActivityCompat.requestPermissions(this, storagePermissions, STORAGE_REQUEST_CODE);
-    }
-
-    private boolean checkCameraPermission(){
-        // check if camera permission is enabled or not
-        // return true if enabled
-        // return false otherwise
-        boolean result = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
-        boolean result1 = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
-        return result && result1;
-    }
-
-    private void requestCameraPermission() {
-        ActivityCompat.requestPermissions(this, cameraPermissions, CAMERA_REQUEST_CODE);
     }
 
     @Override
@@ -528,47 +495,6 @@ public class AddPostActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // handle permission results
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        switch (requestCode){
-            case CAMERA_REQUEST_CODE: {
-                if (grantResults.length>0) {
-                    boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                    boolean storageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-                    if (cameraAccepted && storageAccepted){
-                        // both permissions were granted
-                        pickFromCamera();
-                    }
-                    else {
-                        // camera or gallery or both permissions were denied
-                        Toast.makeText(this, "Permissions for Camera & Storage are both necessary...", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-
-                }
-            }
-            break;
-            case STORAGE_REQUEST_CODE: {
-                if (grantResults.length > 0) {
-                    boolean storageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                    if (storageAccepted){
-                        // storage permission was granted
-                        pickFromGallery();
-                    }
-                    else {
-                        // storage permission was not granted
-                        Toast.makeText(this, "Storage permission necessary...", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-
-                }
-            }
-            break;
-        }
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -577,10 +503,10 @@ public class AddPostActivity extends AppCompatActivity {
 
             if(requestCode == IMAGE_PICK_GALLERY_CODE){
                 //image is picked from gallery, get uri of image
-                image_rui = data.getData();
+                image_rui = data.getData(); //TODO review the last video to see if it can be reused
 
-                //set to imageview
-                imageIv.setImageURI(image_rui);
+                Picasso.get().load(image_rui).into(imageIv);
+
             }
             else if(requestCode == IMAGE_PICK_CAMERA_CODE){
                 //image is picked from camera, get uri of image
