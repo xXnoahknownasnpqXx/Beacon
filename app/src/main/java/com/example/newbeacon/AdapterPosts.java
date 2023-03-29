@@ -155,12 +155,13 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                                 likesRef.child(postIde).child(myUid).removeValue();
                                 mProcessLike = false;
 
-                                addToHisNotifications("" + uid, "" + pId, "Liked your post");
                             }
                             else {
                                 postsRef.child(postIde).child("pLikes").setValue(""+(pLikes + 1));
                                 likesRef.child(postIde).child(myUid).setValue("Liked");
                                 mProcessLike = false;
+
+                                addToHisNotifications("" + uid, "" + pId, "Liked your post");
                             }
                         }
                     }
