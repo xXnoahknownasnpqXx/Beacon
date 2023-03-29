@@ -6,53 +6,65 @@
     android:layout_height="match_parent"
     tools:context=".AddPostActivity">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="2dp"
-        android:orientation="vertical">
+        android:layout_margin="2sp">
 
         <EditText
             android:id="@+id/pTitleEt"
-            android:background="@drawable/edittextstyle"
-            android:padding="10dp"
-            android:hint="Enter title"
-            android:singleLine="true"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:textColor="@color/black">
-        </EditText>
+            android:layout_marginTop="2sp"
+            android:background="@drawable/edittextstyle"
+            android:hint="Enter title"
+            android:minHeight="48sp"
+            android:padding="10sp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/pImageIv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"></EditText>
 
         <ImageView
             android:id="@+id/pImageIv"
-            android:background="#1d12e3"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="200dp">
-        </ImageView>
+            android:background="#1d12e3"
+            android:minHeight="200sp"
+            app:layout_constraintBottom_toTopOf="@+id/pDescriptionEt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pTitleEt"></ImageView>
 
         <EditText
             android:id="@+id/pDescriptionEt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/edittextstyle"
-            android:padding="10dp"
+            android:gravity="start"
             android:hint="Enter description"
             android:inputType="textCapSentences|textMultiLine"
-            android:minHeight="120dp"
-            android:gravity="start"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black">
-        </EditText>
-        
+            android:minHeight="120sp"
+            android:padding="10sp"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/pUploadBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pImageIv"></EditText>
+
         <Button
             android:id="@+id/pUploadBtn"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:text="Post"
-            android:layout_gravity="end"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </Button>
-        
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:text="Post"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/pDescriptionEt"
+            app:layout_constraintTop_toBottomOf="@+id/pDescriptionEt"></Button>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
