@@ -3,12 +3,14 @@ package com.example.newbeacon;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +33,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 // import org.w3c.dom.Comment;
@@ -42,7 +47,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
 
     //to get detail of user and post
-    String myUid, myEmail, myName, myDp, postId, pLikes, hisDp, hisName;
+    String hisUid, myUid, myEmail, myName, myDp, postId, pLikes, hisDp, hisName, pImage;
 
     // boolean mProcessComment = false;
     boolean mProcessLike = false;
@@ -57,6 +62,7 @@ public class PostDetailActivity extends AppCompatActivity {
     ImageButton moreBtn;
     Button likeBtn, shareBtn;
     LinearLayout profileLayout;
+    // RecyclerView recyclerView; TODO see if this view matters
 
     //add comments views
     //EditText commentEt;
@@ -110,28 +116,187 @@ public class PostDetailActivity extends AppCompatActivity {
         actionBar.setSubtitle("SignedIn as: "+myEmail);
 
         //send comment button click
-        sendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-
-
-        });
+//        sendBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//
+//
+//        });
 
         //like button click handle
         likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                likePost();
+            }
+        });
+    }
+
+    private void addToHisNotifications(String hisUid, String pId, String notification){
+        String timestamp = "" + System.currentTimeMillis();
+
+        HashMap<Object, String> hashMap = new HashMap<>();
+        hashMap.put("pId", pId);
+        hashMap.put("timestamp", timestamp);
+        hashMap.put("pUid", hisUid);
+        hashMap.put("notification", notification);
+        hashMap.put("sUid", myUid);
+
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+        ref.child(hisUid).child("Notifications").child(timestamp).setValue(hashMap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        //added successfully
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //failed
+                    }
+                });
+
+    }
+
+    private void showMoreOptions() {
+        PopupMenu popupMenu = new PopupMenu(this, moreBtn, Gravity.END);
+
+        if (hisUid.equals(myUid)) {
+            popupMenu.getMenu().add(Menu.NONE, 0, 0, "Delete");
+        }
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int id = item.getItemId();
+                if (id == 0){
+                    beginDelete();
+                }
+                return false;
+            }
+        });
+        // show pop-up menu
+        popupMenu.show();
+    }
+
+    private void beginDelete() {
+        if (pImage.equals("no Image")) {
+            deleteWithoutImage();
+        } else {
+            deleteWithImage();
+        }
+    }
+
+    private void deleteWithImage() {
+        final ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage("Deleting...");
+
+        StorageReference picRef = FirebaseStorage.getInstance().getReferenceFromUrl(pImage);
+        picRef.delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Query fquery = FirebaseDatabase.getInstance().getReference("Posts").orderByChild("pId").equalTo(postId);
+                        fquery.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot ds: snapshot.getChildren()) {
+                                    ds.getRef().removeValue();
+                                }
+                                //deleted
+                                Toast.makeText(PostDetailActivity.this, "Deleted successfully", Toast.LENGTH_SHORT).show();
+                                pd.dismiss();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+                }).addOnFailureListener(e -> {
+                    pd.dismiss();
+                    Toast.makeText(PostDetailActivity.this, ""+ e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void deleteWithoutImage () {
+        final ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage("Deleting...");
+
+        Query fquery = FirebaseDatabase.getInstance().getReference("Posts").orderByChild("pId").equalTo(postId);
+        fquery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    ds.getRef().removeValue();
+                }
+                //deleted
+                Toast.makeText(PostDetailActivity.this, "Deleted successfully", Toast.LENGTH_SHORT).show();
+                pd.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
     }
 
-//    private void likePost() {
-//
-//
-//    }
+    private void setLikes() {
+        final DatabaseReference likesRef = FirebaseDatabase.getInstance().getReference().child("Likes");
+
+        likesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child(postId).hasChild(myUid)) {
+                    likeBtn.setText("Liked");
+                } else {
+                    likeBtn.setText("Like");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void likePost() {
+        mProcessLike = true;
+
+        final DatabaseReference likesRef = FirebaseDatabase.getInstance().getReference().child("Likes");
+        final DatabaseReference postsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+        likesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (mProcessLike){
+                    if(snapshot.child(postId).hasChild(myUid)) {
+                        postsRef.child(postId).child("pLikes").setValue("" + (Integer.parseInt(pLikes) - 1));
+                        likesRef.child(postId).child(myUid).removeValue();
+                        mProcessLike = false;
+                    } else {
+                        postsRef.child(postId).child("pLikes").setValue("" + (Integer.parseInt(pLikes) + 1));
+                        likesRef.child(postId).child(myUid).setValue("Liked"); // set any value
+                        mProcessLike = false;
+
+                        addToHisNotifications("" + hisUid, "" + postId, "Liked your post");
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
 
 //    private void postComment() {
 //        pd = new ProgressDialog(this);
@@ -272,21 +437,21 @@ public class PostDetailActivity extends AppCompatActivity {
 
                     uNameTv.setText(hisName);
 
-//                    //set image of the user who posted
-//                    //if there is no image i.e. pImage.equals("noImage") then hide ImageView
-//                    if (pImage.equals("noImage")) {
-//                        //hide imageview
-//                        pImageIv.setVisibility(View.GONE);
-//                    } else {
-//                        //show imageview
-//                        pImageIv.setVisibility(View.VISIBLE);
-//                        try {
-//
-//                            Picasso.get().load(pImage).into(pImageIv);
-//                        } catch (Exception e) {
-//
-//                        }
-//                    }
+                    //set image of the user who posted
+                    //if there is no image i.e. pImage.equals("noImage") then hide ImageView
+                    if (pImage.equals("noImage")) {
+                        //hide imageview
+                        pImageIv.setVisibility(View.GONE);
+                    } else {
+                        //show imageview
+                        pImageIv.setVisibility(View.VISIBLE);
+                        try {
+
+                            Picasso.get().load(pImage).into(pImageIv);
+                        } catch (Exception e) {
+
+                        }
+                    }
 
                     //set user image in comment part
 //                    try {

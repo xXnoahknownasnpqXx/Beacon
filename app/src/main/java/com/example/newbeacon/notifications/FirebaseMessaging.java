@@ -53,24 +53,24 @@ public class FirebaseMessaging extends FirebaseMessagingService {
 
             // if user is same that has posted don't show notification
             if (!sender.equals(savedCurrentUser)) {
-                showPostNotification(""+pId, "" + pTitle, "" + pDescription);
-            }
-
-
-        } else if (notificationType.equals("ChatNotification")) {
-            String sent = message.getData().get("sent");
-            String user = message.getData().get("user");
-            FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
-            if (fUser != null && sent.equals(fUser.getUid())){
-                if (!savedCurrentUser.equals(user)) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                        sendOAndAboveNotification(message);
-                    } else {
-                        sendNormalNotification(message);
-                    }
-                }
+                showPostNotification("" + pId, "" + pTitle, "" + pDescription);
             }
         }
+
+//        } else if (notificationType.equals("ChatNotification")) {
+//            String sent = message.getData().get("sent");
+//            String user = message.getData().get("user");
+//            FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
+//            if (fUser != null && sent.equals(fUser.getUid())){
+//                if (!savedCurrentUser.equals(user)) {
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+//                        sendOAndAboveNotification(message);
+//                    } else {
+//                        sendNormalNotification(message);
+//                    }
+//                }
+//            }
+//        }
     }
 
     private void showPostNotification(String pId, String pTitle, String pDescription) {
@@ -127,7 +127,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
 
         RemoteMessage.Notification notification = message.getNotification();
         int i = Integer.parseInt(user.replaceAll("[\\D]",""));
-        Intent intent = new Intent(this, DashboardActivity.class);
+        Intent intent = new Intent(this, PostDetailActivity.class);
         Bundle bundle = new Bundle();
 //        bundle.putString("hisUid", user);
         intent.putExtras(bundle);
@@ -155,14 +155,15 @@ public class FirebaseMessaging extends FirebaseMessagingService {
 
         RemoteMessage.Notification notification = message.getNotification();
         int i = Integer.parseInt(user.replaceAll("[\\D]",""));
-        Intent intent = new Intent(this, DashboardActivity.class);
+        Intent intent = new Intent(this, PostDetailActivity.class);
         Bundle bundle = new Bundle();
-//        bundle.putString("hisUid", user);
+        bundle.putString("hisUid", user);
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pIntent = PendingIntent.getActivity(this, i, intent, PendingIntent.FLAG_ONE_SHOT);
 
         Uri defSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        OreoAndAboveNotification notification1 = new OreoAndAboveNotification(this);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(Integer.parseInt(icon))
                 .setContentText(body)
@@ -181,21 +182,21 @@ public class FirebaseMessaging extends FirebaseMessagingService {
         notificationManager.notify(j,builder.build());
     }
 
-    @Override
-    public void onNewToken(@NonNull String token) {
-        super.onNewToken(token);
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user!=null) {
-            updateToken(token); // TODO FIGURE THIS SHIT OUT
-        }
-    }
-
-    private void updateToken(String tokenRefresh){
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
-        Token token = new Token(tokenRefresh);
-        ref.child(user.getUid()).setValue(token);
-    }
+//    @Override
+//    public void onNewToken(@NonNull String token) {
+//        super.onNewToken(token);
+//
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        if (user!=null) {
+//            updateToken(token); // TODO FIGURE THIS SHIT OUT
+//        }
+//    }
+//
+//    private void updateToken(String tokenRefresh){
+//
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
+//        Token token = new Token(tokenRefresh);
+//        ref.child(user.getUid()).setValue(token);
+//    }
 }

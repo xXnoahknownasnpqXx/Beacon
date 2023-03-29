@@ -8,20 +8,11 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.newbeacon.notifications.Token;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -44,26 +35,26 @@ public class DashboardActivity extends AppCompatActivity {
         BottomNavigationView navigationView = findViewById(R.id.navigationView);
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
-        actionBar.setTitle("Home");
+        actionBar.setTitle("Feed");
         HomeFragment fragment1 = new HomeFragment();
         FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
         ft1.replace(R.id.content, fragment1, "");
         ft1.commit();
 
         //update token
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
-            @Override
-            public void onComplete(@NonNull Task<String> task) {
-                if (!task.isSuccessful()){
-                    Toast.makeText(DashboardActivity.this, "Could not register token", Toast.LENGTH_SHORT).show();
-                }
-
-                String token = task.getResult();
-                Token token1 = new Token(token);
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
-                ref.child(mUID).setValue(token);
-            }
-        });
+//        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+//            @Override
+//            public void onComplete(@NonNull Task<String> task) {
+//                if (!task.isSuccessful()){
+//                    Toast.makeText(DashboardActivity.this, "Could not register token", Toast.LENGTH_SHORT).show();
+//                }
+//
+//                String token = task.getResult();
+//                Token token1 = new Token(token);
+//                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
+//                ref.child(mUID).setValue(token);
+//            }
+//        });
         // TODO FIGURE THIS SHIT OUT
     }
 
@@ -101,13 +92,22 @@ public class DashboardActivity extends AppCompatActivity {
                             ft2.replace(R.id.content, fragment2, "");
                             ft2.commit();
                             return true;
-                        case R.id.nav_settings:
+                        case R.id.nav_users:
                             // users fragment transaction
-                            actionBar.setTitle("Settings");
-                            SettingsFragment fragment3 = new SettingsFragment();
+                            actionBar.setTitle("Users");
+                            UsersFragment fragment3 = new UsersFragment();
                             FragmentTransaction ft3 = getSupportFragmentManager().beginTransaction();
                             ft3.replace(R.id.content, fragment3, "");
                             ft3.commit();
+                            return true;
+
+                        case R.id.nav_notification:
+                            // users fragment transaction
+                            actionBar.setTitle("Notifications");
+                            NotificationsFragment fragment4 = new NotificationsFragment();
+                            FragmentTransaction ft4 = getSupportFragmentManager().beginTransaction();
+                            ft4.replace(R.id.content, fragment4, "");
+                            ft4.commit();
                             return true;
                     }
 

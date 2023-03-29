@@ -13,6 +13,9 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -22,6 +25,7 @@ import androidx.fragment.app.Fragment;
 import android.provider.MediaStore;
 import android.text.TextPaint;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -80,6 +84,7 @@ public class ProfileFragment extends Fragment {
     private static final int IMAGE_PICK_GALLERY_CODE = 300;
     private static final int IMAGE_PICK_CAMERA_CODE = 400;
     //arrays of permissions to be requested
+    private static final String TAG = "PERMISSION_TAG";
     String cameraPermissions[];
     String storagePermissions[];
 
@@ -187,8 +192,15 @@ public class ProfileFragment extends Fragment {
     }
 
     private void requestCameraPermission(){
-        requestPermissions(cameraPermissions, CAMERA_REQUEST_CODE);
-        // requestPermissions(cameraPermissions, CAMERA_REQUEST_CODE);
+        //requestPermissions(cameraPermissions, CAMERA_REQUEST_CODE);
+        //new ActivityResultContracts.RequestPermission(),
+        //new ActivityResultCallback<Boolean>(){
+        //    @Override
+        //   public void onActivityResult(Boolean result){
+
+        //   }
+        //};
+
     }
 
     private void showEditProfileDialog() {
@@ -281,7 +293,41 @@ public class ProfileFragment extends Fragment {
         builder.create().show();
     }
 
+    private ActivityResultLauncher<String> permissionLauncherSingle = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(),
+            new ActivityResultCallback<Boolean>() {
+                @Override
+                public void onActivityResult(Boolean isGranted) {
+                    Log.d(TAG,"onActivityResult: isGranted: "+isGranted);
 
+                    if (isGranted){
+                        pickFromCamera();
+                    }
+                    else {
+                        Log.d(TAG,"onActivityResult: Permission denied...");
+                        //Toast.makeText(ProfileFragment.this,"permission denied...", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+    );
+
+    private ActivityResultLauncher<String> permissionLauncherSingle2 = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(),
+            new ActivityResultCallback<Boolean>() {
+                @Override
+                public void onActivityResult(Boolean isGranted) {
+                    Log.d(TAG,"onActivityResult: isGranted: "+isGranted);
+
+                    if (isGranted){
+                        pickFromGallery();
+                    }
+                    else {
+                        Log.d(TAG,"onActivityResult: Permission denied...");
+                        //Toast.makeText(ProfileFragment.this,"permission denied...", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+    );
 
     private void showImagePicDialog() {
         //show dialog containing options camera and gallery to pick the image
@@ -299,21 +345,15 @@ public class ProfileFragment extends Fragment {
             public void onClick(DialogInterface dialogInterface, int i) {
                 //handle dialog item clicks
                 if (i == 0){
-                    //Camera clicked
-                    if (!checkCameraPermission()){
-                        requestCameraPermission();
-                    }
-                    else {
-                        pickFromCamera();
-                    }
+
+                    String permission = Manifest.permission.CAMERA;
+                    permissionLauncherSingle.launch(permission);
                 } else if (i == 1) {
-                    //Gallery Picked
-                    if (!checkStoragePermission()){
-                        requestStoragePermission();
-                    }
-                    else {
-                        pickFromGallery();
-                    }
+
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), IMAGE_PICK_GALLERY_CODE);
                 }
             }
         });
@@ -366,6 +406,8 @@ public class ProfileFragment extends Fragment {
             if (requestCode == IMAGE_PICK_GALLERY_CODE){
                 //image is picked from gallery, get uri of image
                 image_uri = data.getData();
+
+                Picasso.get().load(image_uri).into(avatarIv);
 
                 uploadProfileCoverPhoto(image_uri);
             }

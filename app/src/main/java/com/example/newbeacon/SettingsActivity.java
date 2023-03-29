@@ -21,7 +21,7 @@ public class SettingsActivity extends AppCompatActivity {
     SharedPreferences sp;
     SharedPreferences.Editor editor;
 
-    private static final String TOPIC_POST_NOTIFICATION = "POST"; //assign this vlaue but use same for this kind of notifications
+    private static final String TOPIC_POST_NOTIFICATION = "POST"; //assign this value but use same for this kind of notifications
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void unsubscribePostNotif() {
         //unsuscribe to a topic (POST) to disable its notification
-        FirebaseMessaging.getInstance().unsubscribeFromTopic(""+TOPIC_POST_NOTIFICATION).addOnCompleteListener(new OnCompleteListener<Void>() {
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(""+TOPIC_POST_NOTIFICATION)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 String msg = "You will not receive post notifications";
@@ -88,7 +89,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void subscribePostNotifs() {
         //subscribe to a topic (POST) to enable its notification
-        FirebaseMessaging.getInstance().subscribeToTopic(""+TOPIC_POST_NOTIFICATION).addOnCompleteListener(new OnCompleteListener<Void>() {
+        FirebaseMessaging.getInstance().subscribeToTopic(""+TOPIC_POST_NOTIFICATION)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 String msg = "You will receive post notifications";
