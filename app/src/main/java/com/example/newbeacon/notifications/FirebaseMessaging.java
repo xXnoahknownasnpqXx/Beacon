@@ -43,19 +43,19 @@ public class FirebaseMessaging extends FirebaseMessagingService {
         SharedPreferences sp = getSharedPreferences("SP_USER", MODE_PRIVATE);
         String savedCurrentUser = sp.getString("Current_USERID", "None");
 
-        String notificationType = message.getData().get("notificationType");
-        if (notificationType.equals("PostNotification")) {
-            String sender = message.getData().get("sender");
-            String pId = message.getData().get("pId");
-            String pTitle = message.getData().get("pTitle");
-            String pDescription = message.getData().get("pDescription");
-
-
-            // if user is same that has posted don't show notification
-            if (!sender.equals(savedCurrentUser)) {
-                showPostNotification("" + pId, "" + pTitle, "" + pDescription);
-            }
-        }
+//        String notificationType = message.getData().get("notificationType");
+//        if (notificationType.equals("PostNotification")) {
+//            String sender = message.getData().get("sender");
+//            String pId = message.getData().get("pId");
+//            String pTitle = message.getData().get("pTitle");
+//            String pDescription = message.getData().get("pDescription");
+//
+//
+//            // if user is same that has posted don't show notification
+//            if (!sender.equals(savedCurrentUser)) {
+//                //showPostNotification("" + pId, "" + pTitle, "" + pDescription);
+//            }
+//        }
 
 //        } else if (notificationType.equals("ChatNotification")) {
 //            String sent = message.getData().get("sent");
@@ -73,114 +73,114 @@ public class FirebaseMessaging extends FirebaseMessagingService {
 //        }
     }
 
-    private void showPostNotification(String pId, String pTitle, String pDescription) {
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//    private void showPostNotification(String pId, String pTitle, String pDescription) {
+//        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//
+//        int notificationID = new Random().nextInt(3000);
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+//            setupPostNotificationChannel(notificationManager);
+//        }
+//
+//        Intent intent = new Intent(this, PostDetailActivity.class);
+//        intent.putExtra("postId", pId);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent, PendingIntent.FLAG_ONE_SHOT);
+//
+//        //Large icon
+//        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_default_img);
+//
+//        Uri notificationSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "" + ADMIN_CHANNEL_ID)
+//                .setSmallIcon(R.drawable.ic_default_img)
+//                .setLargeIcon(largeIcon)
+//                .setContentTitle(pTitle)
+//                .setContentText(pDescription)
+//                .setSound(notificationSoundUri)
+//                .setContentIntent(pendingIntent);
+//
+//        notificationManager.notify(notificationID, notificationBuilder.build());
+//    }
 
-        int notificationID = new Random().nextInt(3000);
+//    @RequiresApi(api = Build.VERSION_CODES.O)
+//    private void setupPostNotificationChannel(NotificationManager notificationManager) {
+//
+//        CharSequence channelName = "New Notification";
+//        String channelDescription = "Device to device post notification";
+//
+//        NotificationChannel adminChannel = new NotificationChannel(ADMIN_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_HIGH);
+//        adminChannel.setDescription(channelDescription);
+//        adminChannel.enableLights(true);
+//        adminChannel.setLightColor(Color.RED);
+//        adminChannel.enableVibration(true);
+//        if (notificationManager != null) {
+//            notificationManager.createNotificationChannel(adminChannel);
+//        }
+//    }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            setupPostNotificationChannel(notificationManager);
-        }
-
-        Intent intent = new Intent(this, PostDetailActivity.class);
-        intent.putExtra("postId", pId);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent, PendingIntent.FLAG_ONE_SHOT);
-
-        //Large icon
-        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_default_img);
-
-        Uri notificationSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "" + ADMIN_CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_default_img)
-                .setLargeIcon(largeIcon)
-                .setContentTitle(pTitle)
-                .setContentText(pDescription)
-                .setSound(notificationSoundUri)
-                .setContentIntent(pendingIntent);
-
-        notificationManager.notify(notificationID, notificationBuilder.build());
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void setupPostNotificationChannel(NotificationManager notificationManager) {
-
-        CharSequence channelName = "New Notification";
-        String channelDescription = "Device to device post notification";
-
-        NotificationChannel adminChannel = new NotificationChannel(ADMIN_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_HIGH);
-        adminChannel.setDescription(channelDescription);
-        adminChannel.enableLights(true);
-        adminChannel.setLightColor(Color.RED);
-        adminChannel.enableVibration(true);
-        if (notificationManager != null) {
-            notificationManager.createNotificationChannel(adminChannel);
-        }
-    }
-
-    private void sendOAndAboveNotification(RemoteMessage message) {
-        String user = message.getData().get("user");
-        String icon = message.getData().get("icon");
-        String title = message.getData().get("title");
-        String body = message.getData().get("body");
-
-        RemoteMessage.Notification notification = message.getNotification();
-        int i = Integer.parseInt(user.replaceAll("[\\D]",""));
-        Intent intent = new Intent(this, PostDetailActivity.class);
-        Bundle bundle = new Bundle();
+//    private void sendOAndAboveNotification(RemoteMessage message) {
+//        String user = message.getData().get("user");
+//        String icon = message.getData().get("icon");
+//        String title = message.getData().get("title");
+//        String body = message.getData().get("body");
+//
+//        RemoteMessage.Notification notification = message.getNotification();
+//        int i = Integer.parseInt(user.replaceAll("[\\D]",""));
+//        Intent intent = new Intent(this, PostDetailActivity.class);
+//        Bundle bundle = new Bundle();
+////        bundle.putString("hisUid", user);
+//        intent.putExtras(bundle);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        PendingIntent pIntent = PendingIntent.getActivity(this, i, intent, PendingIntent.FLAG_ONE_SHOT);
+//
+//        Uri defSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//
+//        OreoAndAboveNotification notification1 = new OreoAndAboveNotification((this));
+//        Notification.Builder builder = notification1.getONotifications(title, body, pIntent ,defSoundUri, icon);
+//
+//        int j = 0;
+//        if (i > 0) {
+//            j = i;
+//        }
+//
+//        notification1.getManager().notify(j,builder.build());
+//    }
+//
+//    private void sendNormalNotification(RemoteMessage message) {
+//        String user = message.getData().get("user");
+//        String icon = message.getData().get("icon");
+//        String title = message.getData().get("title");
+//        String body = message.getData().get("body");
+//
+//        RemoteMessage.Notification notification = message.getNotification();
+//        int i = Integer.parseInt(user.replaceAll("[\\D]",""));
+//        Intent intent = new Intent(this, PostDetailActivity.class);
+//        Bundle bundle = new Bundle();
 //        bundle.putString("hisUid", user);
-        intent.putExtras(bundle);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pIntent = PendingIntent.getActivity(this, i, intent, PendingIntent.FLAG_ONE_SHOT);
-
-        Uri defSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
-        OreoAndAboveNotification notification1 = new OreoAndAboveNotification((this));
-        Notification.Builder builder = notification1.getONotifications(title, body, pIntent ,defSoundUri, icon);
-
-        int j = 0;
-        if (i > 0) {
-            j = i;
-        }
-
-        notification1.getManager().notify(j,builder.build());
-    }
-
-    private void sendNormalNotification(RemoteMessage message) {
-        String user = message.getData().get("user");
-        String icon = message.getData().get("icon");
-        String title = message.getData().get("title");
-        String body = message.getData().get("body");
-
-        RemoteMessage.Notification notification = message.getNotification();
-        int i = Integer.parseInt(user.replaceAll("[\\D]",""));
-        Intent intent = new Intent(this, PostDetailActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("hisUid", user);
-        intent.putExtras(bundle);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pIntent = PendingIntent.getActivity(this, i, intent, PendingIntent.FLAG_ONE_SHOT);
-
-        Uri defSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        OreoAndAboveNotification notification1 = new OreoAndAboveNotification(this);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                .setSmallIcon(Integer.parseInt(icon))
-                .setContentText(body)
-                .setContentTitle(title)
-                .setAutoCancel(true)
-                .setSound(defSoundUri)
-                .setContentIntent(pIntent)
-        ;
-
-        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        int j = 0;
-        if (i > 0) {
-            j = i;
-        }
-
-        notificationManager.notify(j,builder.build());
-    }
+//        intent.putExtras(bundle);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        PendingIntent pIntent = PendingIntent.getActivity(this, i, intent, PendingIntent.FLAG_ONE_SHOT);
+//
+//        Uri defSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//        OreoAndAboveNotification notification1 = new OreoAndAboveNotification(this);
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+//                .setSmallIcon(Integer.parseInt(icon))
+//                .setContentText(body)
+//                .setContentTitle(title)
+//                .setAutoCancel(true)
+//                .setSound(defSoundUri)
+//                .setContentIntent(pIntent)
+//        ;
+//
+//        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+//        int j = 0;
+//        if (i > 0) {
+//            j = i;
+//        }
+//
+//        notificationManager.notify(j,builder.build());
+//    }
 
 //    @Override
 //    public void onNewToken(@NonNull String token) {
