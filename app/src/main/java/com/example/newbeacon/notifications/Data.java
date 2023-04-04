@@ -2,18 +2,18 @@ package com.example.newbeacon.notifications;
 
 public class Data {
 
-    private String user, body, title, sent, notificationType;
+    private String user, body, title, sent;//notificationType;
     private Integer icon;
 
     public Data() {
     }
 
-    public Data(String user, String body, String title, String sent, String notificationType, Integer icon) {
+    public Data(String user, String body, String title, String sent, Integer icon) {
         this.user = user;
         this.body = body;
         this.title = title;
         this.sent = sent;
-        this.notificationType = notificationType;
+        //this.notificationType = notificationType;
         this.icon = icon;
     }
 
@@ -49,13 +49,13 @@ public class Data {
         this.sent = sent;
     }
 
-    public String getNotificationType() {
-        return notificationType;
-    }
-
-    public void setNotificationType(String notificationType) {
-        this.notificationType = notificationType;
-    }
+//    public String getNotificationType() {
+//        return notificationType;
+//    }
+//
+//    public void setNotificationType(String notificationType) {
+//        this.notificationType = notificationType;
+//    }
 
     public Integer getIcon() {
         return icon;

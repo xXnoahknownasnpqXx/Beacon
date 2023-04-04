@@ -155,12 +155,13 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                                 likesRef.child(postIde).child(myUid).removeValue();
                                 mProcessLike = false;
 
-                                addToHisNotifications("" + uid, "" + pId, "Liked your post");
                             }
                             else {
                                 postsRef.child(postIde).child("pLikes").setValue(""+(pLikes + 1));
                                 likesRef.child(postIde).child(myUid).setValue("Liked");
                                 mProcessLike = false;
+
+                                addToHisNotifications("" + uid, "" + pId, "Liked your post");
                             }
                         }
                     }
@@ -245,7 +246,7 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             //add items in menu
             popupMenu.getMenu().add(Menu.NONE, 0, 0, "Delete");
         }
-        popupMenu.getMenu().add(Menu.NONE, 2, 0, "View Detail");
+        // popupMenu.getMenu().add(Menu.NONE, 2, 0, "View Detail");
 
         //item click listener
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -256,12 +257,12 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                     //delete is clicked
                     beginDelete(pId, pImage);
                 }
-                else if(id==2){
-                    //start PostDetailActivity
-                    Intent intent = new Intent(context, PostDetailActivity.class);
-                    intent.putExtra("postId", pId); //will get detail of post using this id, its id of the post clicked
-                    context.startActivity(intent);
-                }
+//                else if(id==2){
+//                    //start PostDetailActivity
+//                    Intent intent = new Intent(context, PostDetailActivity.class);
+//                    intent.putExtra("postId", pId); //will get detail of post using this id, its id of the post clicked
+//                    context.startActivity(intent);
+//                }
                 return false;
             }
         });
