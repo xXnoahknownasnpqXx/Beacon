@@ -97,7 +97,7 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         myHolder.pTimeTv.setText(pTime);
         myHolder.pTitleTv.setText(pTitle);
         myHolder.pDescriptionTv.setText(pDescr);
-        myHolder.pLikesTv.setText(pLikes + " Likes");
+        myHolder.pLikesTv.setText(pLikes + " Confirmed");
         //set Likes for each post
         setLikes(myHolder, pId);
 
@@ -161,7 +161,7 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                                 likesRef.child(postIde).child(myUid).setValue("Liked");
                                 mProcessLike = false;
 
-                                addToHisNotifications("" + uid, "" + pId, "Liked your post");
+                                addToHisNotifications("" + uid, "" + pId, "Confirmed their presence");
                             }
                         }
                     }
@@ -175,13 +175,13 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             }
         });
 
-        myHolder.shareBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //will implement later
-                Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        myHolder.shareBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //will implement later
+//                Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
     }
 
@@ -191,10 +191,10 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.child(postKey).hasChild(myUid)) {
                     holder.likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_liked, 0,0,0);
-                    holder.likeBtn.setText("Liked");
+                    holder.likeBtn.setText("Confirmed");
                 } else {
                     holder.likeBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_like_black, 0,0,0);
-                    holder.likeBtn.setText("Like");
+                    holder.likeBtn.setText("Confirm Presence");
                 }
             }
 
@@ -366,9 +366,9 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                 //pCommentsTv
                 ;
         ImageButton moreBtn;
-        Button likeBtn,
+        Button likeBtn;
                 //commentBtn,
-        shareBtn;
+//        shareBtn;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
@@ -385,7 +385,7 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             moreBtn = itemView.findViewById(R.id.moreBtn);
             likeBtn = itemView.findViewById(R.id.likeBtn);
             // commentBtn = itemView.findViewById(R.id.commentBtn);
-            shareBtn = itemView.findViewById(R.id.shareBtn);
+//            shareBtn = itemView.findViewById(R.id.shareBtn);
 
         }
     }

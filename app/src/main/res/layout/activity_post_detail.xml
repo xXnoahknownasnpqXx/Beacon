@@ -107,7 +107,7 @@
                         android:orientation="horizontal">
                     <TextView
                         android:id="@+id/pLikesTv"
-                        android:text="1.2k Likes"
+                        android:text="1.2k Confirmed"
                         android:layout_weight="1"
                         android:textColor="@color/material_dynamic_primary0"
                         android:layout_width="wrap_content"
@@ -136,30 +136,33 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:layout_marginLeft="0sp"
+                        android:layout_marginRight="0sp">
                         <Button
                             android:id="@+id/likeBtn"
-                            android:layout_width="wrap_content"
+
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="LIKE"
+                            android:text="Confirm Presence"
                             android:drawableLeft="@drawable/ic_like_black"
                             android:background="@color/black"
-                            android:drawablePadding="5dp"
+                            android:drawablePadding="5sp"
                             android:drawableStart="@drawable/ic_like_black"/>
 
 
-                        <Button
-                            android:id="@+id/shareBtn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="#FFFFFF"
-                            android:drawableStart="@drawable/ic_share_black"
-                            android:drawableLeft="@drawable/ic_share_black"
-                            android:drawablePadding="5dp"
-                            android:text="SHARE"
-                            tools:ignore="TextContrastCheck" />
+<!--                        <Button-->
+<!--                            android:id="@+id/shareBtn"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:background="#FFFFFF"-->
+<!--                            android:drawableStart="@drawable/ic_share_black"-->
+<!--                            android:drawableLeft="@drawable/ic_share_black"-->
+<!--                            android:drawablePadding="5dp"-->
+<!--                            android:text="SHARE"-->
+<!--                            tools:ignore="TextContrastCheck" />-->
                     </LinearLayout>
 
                 </LinearLayout>

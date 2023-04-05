@@ -60,7 +60,7 @@ public class PostDetailActivity extends AppCompatActivity {
     ImageView uPictureIv, pImageIv;
     TextView uNameTv, pTimeTiv, pTitleTv, pDescriptionTv, pLikesTv; // pCommentsTv
     ImageButton moreBtn;
-    Button likeBtn, shareBtn;
+    Button likeBtn; // shareBtn
     LinearLayout profileLayout;
     // RecyclerView recyclerView; TODO see if this view matters
 
@@ -99,7 +99,7 @@ public class PostDetailActivity extends AppCompatActivity {
 //        pCommentsTv = findViewById(R.id.pCommentsTv);
         moreBtn = findViewById(R.id.moreBtn);
         likeBtn = findViewById(R.id.likeBtn);
-        shareBtn = findViewById(R.id.shareBtn);
+//        shareBtn = findViewById(R.id.shareBtn);
 
         //profileLayout = findViewById(R.id.profileLayout);
 
