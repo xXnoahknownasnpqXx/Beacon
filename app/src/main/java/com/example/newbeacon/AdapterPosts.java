@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -182,6 +183,14 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 //                Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show();
 //            }
 //        });
+        myHolder.profileLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ThereProfileActivity.class);
+                intent.putExtra("uid",uid);
+                context.startActivity(intent);
+            }
+        });
 
     }
 
@@ -369,6 +378,8 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         Button likeBtn;
                 //commentBtn,
 //        shareBtn;
+        LinearLayout profileLayout;
+
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
@@ -386,6 +397,7 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             likeBtn = itemView.findViewById(R.id.likeBtn);
             // commentBtn = itemView.findViewById(R.id.commentBtn);
 //            shareBtn = itemView.findViewById(R.id.shareBtn);
+            profileLayout = itemView.findViewById(R.id.profileLayout);
 
         }
     }
