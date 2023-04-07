@@ -82,7 +82,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
 //            setupPostNotificationChannel(notificationManager);
 //        }
 //
-//        Intent intent = new Intent(this, PostDetailActivity.class);
+//        Intent intent = new Intent(this, DashboardActivity.class);
 //        intent.putExtra("postId", pId);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //

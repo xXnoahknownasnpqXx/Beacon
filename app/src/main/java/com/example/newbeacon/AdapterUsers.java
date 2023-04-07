@@ -41,6 +41,7 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.MyHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         // get date
+        final String hisUid = userList.get(position).getUid();
         String userImage = userList.get(position).getImage();
         String userName = userList.get(position).getName();
         String userEmail = userList.get(position).getEmail();
@@ -73,7 +74,7 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.MyHolder> {
                     if (which==0){
                         //profile clicked
                         Intent intent = new Intent(context, ThereProfileActivity.class);
-                        intent.putExtra("uid",userUsername);
+                        intent.putExtra("uid",hisUid);
                         context.startActivity(intent);
                     }
                 }
