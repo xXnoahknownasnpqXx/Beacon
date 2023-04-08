@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/black"
     tools:context=".ThereProfileActivity">
 
@@ -14,32 +15,37 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:background="#1d12e3">
+                android:background="#dd02fa">
 
 
             </RelativeLayout>
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/avatarIv"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/ic_default_img_grey"
+                android:layout_marginTop="110sp"
+                android:layout_width="120sp"
+                android:layout_height="120sp"
+                android:layout_marginLeft="20sp"
+                app:civ_border_width="1sp"
+                app:civ_border_color="@color/white">
+            </de.hdodenhof.circleimageview.CircleImageView>
+
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
                 android:orientation="horizontal"
-                android:layout_marginTop="100dp">
+                android:layout_marginTop="20sp"
+                android:layout_below="@id/avatarIv">
 
-                <ImageView
-                    android:id="@+id/avatarIv"
-                    android:layout_marginStart="20dp"
-                    android:background="#392fed"
-                    android:padding="5dp"
-                    android:src="@drawable/ic_default_img_grey"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_marginLeft="20dp">
-                </ImageView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="82dp"
+                    android:layout_height="100dp"
                     android:orientation="vertical"
                     android:background="#77000000">
 
@@ -58,9 +64,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:textColor="@color/white"
-                        android:text="Username: ">
-                    </TextView>
+                        android:text="Username: "
+                        android:textColor="@color/white"></TextView>
 
                     <TextView
                         android:id="@+id/interestsTv"

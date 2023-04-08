@@ -170,15 +170,16 @@
     </LinearLayout>
 
     <ToggleButton
-        android:id="@+id/toggleButton5"
+        android:id="@+id/toggleButton"
         android:layout_width="100sp"
-        android:layout_height="46sp"
-        android:text="ToggleButton"
+        android:layout_height="40sp"
+        android:textOff="ARTIST"
+        android:textOn="USER"
         app:layout_constraintTop_toBottomOf="@id/createaccounttxt"
         app:layout_constraintBottom_toTopOf="@id/usernametxt"
         android:gravity="center"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        />
+        android:background="@drawable/toggle_button_background" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

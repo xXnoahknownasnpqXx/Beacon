@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -37,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView haveaccounttxt, signintxt;
     private ProgressDialog progressDialog;
     private FirebaseAuth mAuth;
+    ToggleButton artistOrUser;
 
 
     @Override
@@ -56,6 +58,9 @@ public class RegisterActivity extends AppCompatActivity {
         signUpBtn = findViewById(R.id.signupbtn);
         haveaccounttxt = findViewById(R.id.haveaccounttxt);
         signintxt = findViewById(R.id.signintxt);
+        artistOrUser = findViewById(R.id.toggleButton);
+        artistOrUser.setTextOff("ARTIST");
+        artistOrUser.setTextOn("USER");
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -94,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
                             "\nand satisfy 3 out of the 4 following requirements:" +
                             "\n\t1. At least one digit"
                             + "\n\t2. One lower case letter \n\t3. One upper case letter\n\t4. One symbol.");
-                } else if (!validateequality(password, confirmpassword)){
+                } else if (!validateEquality(password, confirmpassword)){
                     confirmpasswordtxt.setError("The 2 passwords don't match! Password 1: " + password + "\nPassword 2: " + confirmpassword);
                 }
                 else {
@@ -136,6 +141,7 @@ public class RegisterActivity extends AppCompatActivity {
                             map.put("interests", "");
                             map.put("image", "");
                             map.put("username", usernametxt.getText().toString());
+                            map.put("account type", artistOrUser.getText().toString());
 
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
                             DatabaseReference reference = database.getReference("Users");
@@ -200,7 +206,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private static boolean validateequality(String password1, String password2){
+    private static boolean validateEquality(String password1, String password2){
         if (password1.equals(password2)){
             return true;
         }
