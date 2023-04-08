@@ -249,12 +249,12 @@ public class AddPostActivity extends AppCompatActivity {
 //                                                image_rui = null;
 
                                                 //send notification
-//                                                prepareNotification(
-//                                                        ""+timeStamp,
-//                                                        ""+ name + " added a new post",
-//                                                        ""+title+ "\n"+description,
-//                                                        "PostNotification",
-//                                                        "POST");
+                                                prepareNotification(
+                                                        ""+timeStamp,
+                                                        ""+ name + " added a new post",
+                                                        ""+title+ "\n"+description,
+                                                        "PostNotification",
+                                                        "POST");
                                             }
                                         });
                             }
@@ -320,67 +320,67 @@ public class AddPostActivity extends AppCompatActivity {
     }
 
     //call this whenever you publish a post
-//    private void prepareNotification(String pID, String title, String description, String notificationType, String notificationTopic){
-//        //prepare data for notification
-//
-//        String NOTIFICATION_TOPIC = "/topics/" + notificationTopic; //Topic must match with what the receiver subscribed to
-//        String NOTIFICATION_TITLE = title; //e.g. Noah Quick added new post
-//        String NOTIFICATION_MESSAGE = description; //content of post
-//        String NOTIFICATION_TYPE = notificationType; //now there are two notifications types chat and post, so to differentiate in firebasemessageing.java class
-//
-//        //prepare json what to send, and where to sent
-//        JSONObject notificationJo = new JSONObject();
-//        JSONObject notificationBodyJo = new JSONObject();
-//
-//        try {
-//            //waht to send
-//            notificationBodyJo.put("notificationType", NOTIFICATION_TYPE);
-//            notificationBodyJo.put("sender", uid);//uid of current use/sender
-//            notificationBodyJo.put("pId", pID);//post id
-//            notificationBodyJo.put("pTitle", NOTIFICATION_TITLE);
-//            notificationBodyJo.put("pDescription", NOTIFICATION_MESSAGE);
-//            //where to send
-//            notificationJo.put("to", NOTIFICATION_TOPIC);
-//
-//            notificationJo.put("data", notificationBodyJo);//combine data to be sent
-//        } catch (JSONException e) {
-//            Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-//        }
-//
-//        sendPostNotification(notificationJo);
-//
-//    }
+    private void prepareNotification(String pID, String title, String description, String notificationType, String notificationTopic){
+        //prepare data for notification
 
-//    private void sendPostNotification(JSONObject notificationJo) {
-//        //send volley object request
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://fcm.googleapis.com/fcm/send", notificationJo,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        Log.d("FCM_RESPONSE", "onResponse: " + response.toString());
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        //error occurs
-//                        Toast.makeText(AddPostActivity.this, ""+ error.toString(), Toast.LENGTH_SHORT).show();
-//                    }
-//        }){
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                //put required headers
-//                Map<String, String> headers = new HashMap<>();
-//                headers.put("Content-Type", "application/json");
-//                headers.put("Authorization", "key= AAAAfCAVQ2s:APA91bHfuYonjazZtYd_IAdqwBLaQpWAUQnAzUi8v1iCu7iyp0f2Ggs253CgOoZMtltMXx-f8VYzolK-fjolGmRc5rLHp17wX5rboRtYmO9C22NqbZav1m5q_SB1EjlmqXbF4l4m5HA8");
-//
-//                return headers;
-//            }
-//        };
-//
-//        //enqueue the volley request
-//        Volley.newRequestQueue(this).add(jsonObjectRequest);
-//    }
+        String NOTIFICATION_TOPIC = "/topics/" + notificationTopic; //Topic must match with what the receiver subscribed to
+        String NOTIFICATION_TITLE = title; //e.g. Noah Quick added new post
+        String NOTIFICATION_MESSAGE = description; //content of post
+        String NOTIFICATION_TYPE = notificationType; //now there are two notifications types chat and post, so to differentiate in firebasemessageing.java class
+
+        //prepare json what to send, and where to sent
+        JSONObject notificationJo = new JSONObject();
+        JSONObject notificationBodyJo = new JSONObject();
+
+        try {
+            //waht to send
+            notificationBodyJo.put("notificationType", NOTIFICATION_TYPE);
+            notificationBodyJo.put("sender", uid);//uid of current use/sender
+            notificationBodyJo.put("pId", pID);//post id
+            notificationBodyJo.put("pTitle", NOTIFICATION_TITLE);
+            notificationBodyJo.put("pDescription", NOTIFICATION_MESSAGE);
+            //where to send
+            notificationJo.put("to", NOTIFICATION_TOPIC);
+
+            notificationJo.put("data", notificationBodyJo);//combine data to be sent
+        } catch (JSONException e) {
+            Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        sendPostNotification(notificationJo);
+
+    }
+
+    private void sendPostNotification(JSONObject notificationJo) {
+        //send volley object request
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://fcm.googleapis.com/fcm/send", notificationJo,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("FCM_RESPONSE", "onResponse: " + response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //error occurs
+                        Toast.makeText(AddPostActivity.this, ""+ error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                //put required headers
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", "key= AAAAfCAVQ2s:APA91bHfuYonjazZtYd_IAdqwBLaQpWAUQnAzUi8v1iCu7iyp0f2Ggs253CgOoZMtltMXx-f8VYzolK-fjolGmRc5rLHp17wX5rboRtYmO9C22NqbZav1m5q_SB1EjlmqXbF4l4m5HA8");
+
+                return headers;
+            }
+        };
+
+        //enqueue the volley request
+        Volley.newRequestQueue(this).add(jsonObjectRequest);
+    }
     private ActivityResultLauncher<String> permissionLauncherSingle = registerForActivityResult(
             new ActivityResultContracts.RequestPermission(),
             new ActivityResultCallback<Boolean>() {

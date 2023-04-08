@@ -39,7 +39,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        ref = firebaseDatabase.getReference("Users").child(firebaseAuth.getCurrentUser().getUid());
+//        ref = firebaseDatabase.getReference("Users").child(firebaseAuth.getCurrentUser().getUid());
 
         BottomNavigationView navigationView = findViewById(R.id.navigationView);
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
@@ -96,32 +96,32 @@ public class DashboardActivity extends AppCompatActivity {
                         case R.id.nav_profile:
                             // profile fragment transaction
                             actionBar.setTitle("Profile");
-                            ref.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    // Check the value of the "username" attribute
-                                    String account_type = snapshot.child("account type").getValue().toString();
-                                    if (account_type.equals("USER")) {
-                                        // The username matches the desired value
-                                        UserProfileFragment fragment2 = new UserProfileFragment();
-                                        FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
-                                        ft2.replace(R.id.content, fragment2, "");
-                                        ft2.commit();
-
-                                    } else {
-                                        // The username does not match the desired value
+//                            ref.addValueEventListener(new ValueEventListener() {
+//                                @Override
+//                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                    // Check the value of the "username" attribute
+//                                    String account_type = snapshot.child("account type").getValue().toString();
+//                                    if (account_type.equals("USER")) {
+//                                        // The username matches the desired value
+//                                        UserProfileFragment fragment2 = new UserProfileFragment();
+//                                        FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
+//                                        ft2.replace(R.id.content, fragment2, "");
+//                                        ft2.commit();
+//
+//                                    } else {
+//                                        // The username does not match the desired value
                                         ProfileFragment fragment2 = new ProfileFragment();
                                         FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
                                         ft2.replace(R.id.content, fragment2, "");
                                         ft2.commit();
-                                    }
-                                }
+//                                    }
+//                                }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                    // Handle the error
-                                }
-                            });
+//                                @Override
+//                                public void onCancelled(@NonNull DatabaseError error) {
+//                                    // Handle the error
+//                                }
+//                            });
 
                             return true;
                         case R.id.nav_users:
