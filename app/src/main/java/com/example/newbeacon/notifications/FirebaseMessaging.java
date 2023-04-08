@@ -43,82 +43,82 @@ public class FirebaseMessaging extends FirebaseMessagingService {
         SharedPreferences sp = getSharedPreferences("SP_USER", MODE_PRIVATE);
         String savedCurrentUser = sp.getString("Current_USERID", "None");
 
-        String notificationType = message.getData().get("notificationType");
-        if (notificationType.equals("PostNotification")) {
-            String sender = message.getData().get("sender");
-            String pId = message.getData().get("pId");
-            String pTitle = message.getData().get("pTitle");
-            String pDescription = message.getData().get("pDescription");
-//
-//
-            // if user is same that has posted don't show notification
-            if (!sender.equals(savedCurrentUser)) {
-                showPostNotification("" + pId, "" + pTitle, "" + pDescription);
-            }
-        }
-
-//        } else if (notificationType.equals("ChatNotification")) {
-//            String sent = message.getData().get("sent");
-//            String user = message.getData().get("user");
-//            FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
-//            if (fUser != null && sent.equals(fUser.getUid())){
-//                if (!savedCurrentUser.equals(user)) {
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-//                        sendOAndAboveNotification(message);
-//                    } else {
-//                        sendNormalNotification(message);
-//                    }
-//                }
+//        String notificationType = message.getData().get("notificationType");
+//        if (notificationType.equals("PostNotification")) {
+//            String sender = message.getData().get("sender");
+//            String pId = message.getData().get("pId");
+//            String pTitle = message.getData().get("pTitle");
+//            String pDescription = message.getData().get("pDescription");
+////
+////
+//            // if user is same that has posted don't show notification
+//            if (!sender.equals(savedCurrentUser)) {
+//                showPostNotification("" + pId, "" + pTitle, "" + pDescription);
 //            }
 //        }
-    }
-
-    private void showPostNotification(String pId, String pTitle, String pDescription) {
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        int notificationID = new Random().nextInt(3000);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            setupPostNotificationChannel(notificationManager);
-        }
-
-        Intent intent = new Intent(this, DashboardActivity.class);
-        intent.putExtra("postId", pId);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent, PendingIntent.FLAG_ONE_SHOT);
-
-        //Large icon
-        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_default_img);
-
-        Uri notificationSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "" + ADMIN_CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_default_img)
-                .setLargeIcon(largeIcon)
-                .setContentTitle(pTitle)
-                .setContentText(pDescription)
-                .setSound(notificationSoundUri)
-                .setContentIntent(pendingIntent);
-
-        notificationManager.notify(notificationID, notificationBuilder.build());
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void setupPostNotificationChannel(NotificationManager notificationManager) {
-
-        CharSequence channelName = "New Notification";
-        String channelDescription = "Device to device post notification";
-
-        NotificationChannel adminChannel = new NotificationChannel(ADMIN_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_HIGH);
-        adminChannel.setDescription(channelDescription);
-        adminChannel.enableLights(true);
-        adminChannel.setLightColor(Color.RED);
-        adminChannel.enableVibration(true);
-        if (notificationManager != null) {
-            notificationManager.createNotificationChannel(adminChannel);
-        }
-    }
-
+//
+////        } else if (notificationType.equals("ChatNotification")) {
+////            String sent = message.getData().get("sent");
+////            String user = message.getData().get("user");
+////            FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
+////            if (fUser != null && sent.equals(fUser.getUid())){
+////                if (!savedCurrentUser.equals(user)) {
+////                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+////                        sendOAndAboveNotification(message);
+////                    } else {
+////                        sendNormalNotification(message);
+////                    }
+////                }
+////            }
+////        }
+//    }
+//
+//    private void showPostNotification(String pId, String pTitle, String pDescription) {
+//        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//
+//        int notificationID = new Random().nextInt(3000);
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+//            setupPostNotificationChannel(notificationManager);
+//        }
+//
+//        Intent intent = new Intent(this, DashboardActivity.class);
+//        intent.putExtra("postId", pId);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent, PendingIntent.FLAG_ONE_SHOT);
+//
+//        //Large icon
+//        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_default_img);
+//
+//        Uri notificationSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "" + ADMIN_CHANNEL_ID)
+//                .setSmallIcon(R.drawable.ic_default_img)
+//                .setLargeIcon(largeIcon)
+//                .setContentTitle(pTitle)
+//                .setContentText(pDescription)
+//                .setSound(notificationSoundUri)
+//                .setContentIntent(pendingIntent);
+//
+//        notificationManager.notify(notificationID, notificationBuilder.build());
+//    }
+//
+//    @RequiresApi(api = Build.VERSION_CODES.O)
+//    private void setupPostNotificationChannel(NotificationManager notificationManager) {
+//
+//        CharSequence channelName = "New Notification";
+//        String channelDescription = "Device to device post notification";
+//
+//        NotificationChannel adminChannel = new NotificationChannel(ADMIN_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_HIGH);
+//        adminChannel.setDescription(channelDescription);
+//        adminChannel.enableLights(true);
+//        adminChannel.setLightColor(Color.RED);
+//        adminChannel.enableVibration(true);
+//        if (notificationManager != null) {
+//            notificationManager.createNotificationChannel(adminChannel);
+//        }
+//    }
+//
 //    private void sendOAndAboveNotification(RemoteMessage message) {
 //        String user = message.getData().get("user");
 //        String icon = message.getData().get("icon");
@@ -181,22 +181,22 @@ public class FirebaseMessaging extends FirebaseMessagingService {
 //
 //        notificationManager.notify(j,builder.build());
 //    }
-
-    @Override
-    public void onNewToken(@NonNull String token) {
-        super.onNewToken(token);
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user!=null) {
-            updateToken(token); // TODO FIGURE THIS SHIT OUT
-        }
-    }
-
-    private void updateToken(String tokenRefresh){
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
-        Token token = new Token(tokenRefresh);
-        ref.child(user.getUid()).setValue(token);
+//
+//    @Override
+//    public void onNewToken(@NonNull String token) {
+//        super.onNewToken(token);
+//
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        if (user!=null) {
+//            updateToken(token); // TODO FIGURE THIS SHIT OUT
+//        }
+//    }
+//
+//    private void updateToken(String tokenRefresh){
+//
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
+//        Token token = new Token(tokenRefresh);
+//        ref.child(user.getUid()).setValue(token);
     }
 }

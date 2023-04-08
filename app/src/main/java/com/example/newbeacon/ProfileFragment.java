@@ -155,15 +155,23 @@ public class ProfileFragment extends Fragment {
                     String interests = "" + ds.child("interests").getValue();
 
                     // set/upload data to user profile
-                    nameTv.setText(name);
                     usernameTv.setText(username);
-                    interestsTv.setText(interests);
-                    try {
-                        // if image is found then set, otherwise set a default image to avatarIv
-                        Picasso.get().load(image).into(avatarIv);
+
+                    if (name.equals("")) {
+                        nameTv.setText("Name");
+                    } else {
+                        nameTv.setText(name);
                     }
-                    catch (Exception e){
-                        Picasso.get().load(R.drawable.ic_default_img_grey).into(avatarIv);
+
+                    if (interests.equals("")) {
+                        interestsTv.setText("Genres");
+                    } else {
+                        interestsTv.setText(interests);
+                    }
+
+                    // if image is found then set, otherwise set a default image to avatarIv
+                    if (!image.equals("")){
+                        Picasso.get().load(image).into(avatarIv);
                     }
                 }
             }
@@ -223,7 +231,7 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(), ""+error.getMessage(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getActivity(), ""+error.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -265,7 +273,7 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(), ""+error.getMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), ""+error.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -364,14 +372,14 @@ public class ProfileFragment extends Fragment {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     pd.dismiss();
-                                    Toast.makeText(getActivity(), "Updated!", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getActivity(), "Updated!", Toast.LENGTH_SHORT).show();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     pd.dismiss();
-                                    Toast.makeText(getActivity(), ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getActivity(), ""+e.getMessage(), Toast.LENGTH_SHORT).show();
 
                                 }
                             });
@@ -396,7 +404,7 @@ public class ProfileFragment extends Fragment {
                     }
                 }
                 else {
-                    Toast.makeText(getActivity(), "Please Enter " + key + "", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "Please Enter " + key + "", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -493,7 +501,7 @@ public class ProfileFragment extends Fragment {
                     if (cameraAccepted && writeStorageAccepted){
                         pickFromCamera();
                     }else{
-                        Toast.makeText(getActivity(), "Please enable camera & storage permission", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "Please enable camera & storage permission", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -506,7 +514,7 @@ public class ProfileFragment extends Fragment {
                     if (writeStorageAccepted){
                         pickFromGallery();
                     }else{
-                        Toast.makeText(getActivity(), "Please enable storage permission", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "Please enable storage permission", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -571,7 +579,7 @@ public class ProfileFragment extends Fragment {
                                         public void onSuccess(Void aVoid) {
 
                                             pd.dismiss();
-                                            Toast.makeText(getActivity(), "Image Updated!", Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(getActivity(), "Image Updated!", Toast.LENGTH_SHORT).show();
 
                                         }
                                     })
@@ -580,7 +588,7 @@ public class ProfileFragment extends Fragment {
                                         public void onFailure(@NonNull Exception e) {
 
                                             pd.dismiss();
-                                            Toast.makeText(getActivity(), "Error Updating Image...", Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(getActivity(), "Error Updating Image...", Toast.LENGTH_SHORT).show();
 
                                         }
                                     });
@@ -608,7 +616,7 @@ public class ProfileFragment extends Fragment {
                         else{
                             //error
                             pd.dismiss();
-                            Toast.makeText(getActivity(), "Some error occurred", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(), "Some error occurred", Toast.LENGTH_SHORT).show();
                         }
                     }
                 })
@@ -616,7 +624,7 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         pd.dismiss();
-                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -666,7 +674,7 @@ public class ProfileFragment extends Fragment {
         inflater.inflate(R.menu.menu_main, menu);
 
         MenuItem item = menu.findItem(R.id.action_search);
-        //v7 searchview ot search user specfic posts
+        //v7 searchview ot search user specific posts
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

@@ -284,6 +284,7 @@ public class MainActivity extends AppCompatActivity {
                             HashMap<Object, String> map = new HashMap<>();
                             //put user info in HashMap
 
+                            map.put("account type", "USER");
                             map.put("email", email);
                             map.put("uid", uid);
                             map.put("name", "");

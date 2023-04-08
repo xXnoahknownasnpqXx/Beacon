@@ -9,6 +9,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -29,6 +30,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -117,6 +119,9 @@ public class UserProfileFragment extends Fragment {
         adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, locations);
         spinner.setAdapter(adapter);
 
+
+        pd = new ProgressDialog(getActivity());
+
         Query query = reference.orderByChild("email").equalTo(firebaseUser.getEmail());
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -131,15 +136,24 @@ public class UserProfileFragment extends Fragment {
                     String interests = "" + ds.child("interests").getValue();
 
                     // set/upload data to user profile
-                    nameTv.setText(name);
-                    usernameTv.setText(username);
-                    interestsTv.setText(interests);
-                    try {
-                        // if image is found then set, otherwise set a default image to avatarIv
-                        Picasso.get().load(image).into(avatarIv);
+                    if (name.equals("")) {
+                        nameTv.setText("Name");
+                    } else {
+                        nameTv.setText(name);
                     }
-                    catch (Exception e){
-                        Picasso.get().load(R.drawable.ic_default_img_grey).into(avatarIv);
+
+                    usernameTv.setText(username);
+
+                    if (interests.equals("")) {
+                        interestsTv.setText("Genres");
+                    } else {
+                        interestsTv.setText(interests);
+                    }
+
+
+                    // if image is found then set, otherwise set a default image to avatarIv
+                    if (!image.equals("")){
+                        Picasso.get().load(image).into(avatarIv);
                     }
                 }
             }
@@ -224,14 +238,14 @@ public class UserProfileFragment extends Fragment {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     pd.dismiss();
-                                    Toast.makeText(getActivity(), "Updated!", Toast.LENGTH_SHORT).show();
+                                    // Toast.makeText(getActivity(), "Updated!", Toast.LENGTH_SHORT).show();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     pd.dismiss();
-                                    Toast.makeText(getActivity(), ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getActivity(), ""+e.getMessage(), Toast.LENGTH_SHORT).show();
 
                                 }
                             });
@@ -256,7 +270,7 @@ public class UserProfileFragment extends Fragment {
                     }
                 }
                 else {
-                    Toast.makeText(getActivity(), "Please Enter " + key + "", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "Please Enter " + key + "", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -394,7 +408,7 @@ public class UserProfileFragment extends Fragment {
                                         public void onSuccess(Void aVoid) {
 
                                             pd.dismiss();
-                                            Toast.makeText(getActivity(), "Image Updated!", Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(getActivity(), "Image Updated!", Toast.LENGTH_SHORT).show();
 
                                         }
                                     })
@@ -403,7 +417,7 @@ public class UserProfileFragment extends Fragment {
                                         public void onFailure(@NonNull Exception e) {
 
                                             pd.dismiss();
-                                            Toast.makeText(getActivity(), "Error Updating Image...", Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(getActivity(), "Error Updating Image...", Toast.LENGTH_SHORT).show();
 
                                         }
                                     });
@@ -431,7 +445,7 @@ public class UserProfileFragment extends Fragment {
                         else{
                             //error
                             pd.dismiss();
-                            Toast.makeText(getActivity(), "Some error occurred", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(), "Some error occurred", Toast.LENGTH_SHORT).show();
                         }
                     }
                 })
@@ -439,7 +453,7 @@ public class UserProfileFragment extends Fragment {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         pd.dismiss();
-                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }

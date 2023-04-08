@@ -31,7 +31,8 @@
                 android:layout_height="100sp"
                 android:layout_centerHorizontal="true"
                 app:civ_border_width="2sp"
-                app:civ_border_color="@color/white">
+                app:civ_border_color="@color/white"
+                app:civ_circle_background_color="#1d12e3">
             </de.hdodenhof.circleimageview.CircleImageView>
 
             <LinearLayout
@@ -79,17 +80,20 @@
                     android:gravity="center">
                     <TextView
                         android:id="@+id/locationTv"
-                        android:layout_width="70sp"
+                        android:layout_width="65sp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
                         android:textColor="@color/white"
+                        android:textAlignment="textStart"
                         android:text="Location: ">
                     </TextView>
 
                     <Spinner
-                        android:layout_width="100sp"
+                        android:layout_width="wrap_content"
+                        android:minWidth="30sp"
                         android:layout_height="match_parent"
-                        android:id="@+id/locationMenu">
+                        android:id="@+id/locationMenu"
+                        android:spinnerMode="dropdown"
+                        android:background="@color/white">
                     </Spinner>
                 </LinearLayout>
 

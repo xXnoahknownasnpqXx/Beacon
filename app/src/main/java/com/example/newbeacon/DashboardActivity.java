@@ -9,7 +9,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.example.newbeacon.notifications.Token;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,13 +22,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class DashboardActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference ref;
-
     private ActionBar actionBar;
 
     String mUID;
@@ -38,8 +42,6 @@ public class DashboardActivity extends AppCompatActivity {
         actionBar.setTitle("Profile");
 
         firebaseAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-//        ref = firebaseDatabase.getReference("Users").child(firebaseAuth.getCurrentUser().getUid());
 
         BottomNavigationView navigationView = findViewById(R.id.navigationView);
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
@@ -51,19 +53,15 @@ public class DashboardActivity extends AppCompatActivity {
         ft1.commit();
 
         //update token
-//        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
-//            @Override
-//            public void onComplete(@NonNull Task<String> task) {
-//                if (!task.isSuccessful()){
-//                    Toast.makeText(DashboardActivity.this, "Could not register token", Toast.LENGTH_SHORT).show();
-//                }
+//        @Override
+//        public void onNewToken(@NonNull String token) {
+//            super.onNewToken(token);
 //
-//                String token = task.getResult();
-//                Token token1 = new Token(token);
-//                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
-//                ref.child(mUID).setValue(token);
+//            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//            if (user!=null) {
+//                updateToken(token); // TODO FIGURE THIS SHIT OUT
 //            }
-//        });
+//        }
         // TODO FIGURE THIS SHIT OUT
     }
 
@@ -96,32 +94,33 @@ public class DashboardActivity extends AppCompatActivity {
                         case R.id.nav_profile:
                             // profile fragment transaction
                             actionBar.setTitle("Profile");
-//                            ref.addValueEventListener(new ValueEventListener() {
-//                                @Override
-//                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                                    // Check the value of the "username" attribute
-//                                    String account_type = snapshot.child("account type").getValue().toString();
-//                                    if (account_type.equals("USER")) {
-//                                        // The username matches the desired value
-//                                        UserProfileFragment fragment2 = new UserProfileFragment();
-//                                        FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
-//                                        ft2.replace(R.id.content, fragment2, "");
-//                                        ft2.commit();
-//
-//                                    } else {
+                            ref = FirebaseDatabase.getInstance().getReference("Users");
+                            ref.child(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    // Check the value of the "username" attribute
+                                    String account_type = snapshot.child("account type").getValue(String.class);
+                                    if (account_type.equals("USER")) {
+                                        // The username matches the desired value
+                                        UserProfileFragment fragment2 = new UserProfileFragment();
+                                        FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
+                                        ft2.replace(R.id.content, fragment2, "");
+                                        ft2.commit();
+
+                                    } else {
 //                                        // The username does not match the desired value
                                         ProfileFragment fragment2 = new ProfileFragment();
                                         FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
                                         ft2.replace(R.id.content, fragment2, "");
                                         ft2.commit();
-//                                    }
-//                                }
+                                    }
+                                }
 
-//                                @Override
-//                                public void onCancelled(@NonNull DatabaseError error) {
-//                                    // Handle the error
-//                                }
-//                            });
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    // Handle the error
+                                }
+                            });
 
                             return true;
                         case R.id.nav_users:
