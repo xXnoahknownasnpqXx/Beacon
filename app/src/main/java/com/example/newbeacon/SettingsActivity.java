@@ -37,7 +37,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         //init sp
         sp = getSharedPreferences("Notification_SP", MODE_PRIVATE);
-        boolean isPostEnabled = sp.getBoolean(""+TOPIC_POST_NOTIFICATION,false);
+        boolean isPostEnabled = sp.getBoolean(TOPIC_POST_NOTIFICATION,false);
         //if enable check switch, otherwise uncheck switch - by default unchecked/false
         if (isPostEnabled){
             postSwitch.setChecked(true);
@@ -52,7 +52,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 //edit switch state
                 editor = sp.edit();
-                editor.putBoolean(""+TOPIC_POST_NOTIFICATION, isChecked);
+                editor.putBoolean(TOPIC_POST_NOTIFICATION, isChecked);
                 editor.apply();
 
                 if (isChecked){
@@ -74,31 +74,29 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void unsubscribePostNotif() {
         //unsuscribe to a topic (POST) to disable its notification
-        FirebaseMessaging.getInstance().unsubscribeFromTopic(""+TOPIC_POST_NOTIFICATION)
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(TOPIC_POST_NOTIFICATION)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 String msg = "You will not receive post notifications";
-                if (!task.isSuccessful()){
-                    msg = "UnSubscription failed";
-                }
                 Toast.makeText(SettingsActivity.this, msg, Toast.LENGTH_SHORT).show();
             }
         });
+
+
     }
 
     private void subscribePostNotifs() {
         //subscribe to a topic (POST) to enable its notification
-        FirebaseMessaging.getInstance().subscribeToTopic(""+TOPIC_POST_NOTIFICATION)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                String msg = "You will receive post notifications";
-                if (!task.isSuccessful()){
-                    msg = "Subscription failed";
-                }
-                Toast.makeText(SettingsActivity.this, msg, Toast.LENGTH_SHORT).show();
-            }
-        });
+        // JAVA
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC_POST_NOTIFICATION)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(SettingsActivity.this,
+                                "You will receive post notifications", Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                });
     }
 }

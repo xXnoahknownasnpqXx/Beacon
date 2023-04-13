@@ -8,15 +8,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -30,14 +27,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -54,12 +45,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
-import java.util.Map;
 
 public class AddPostActivity extends AppCompatActivity {
 
@@ -220,6 +207,8 @@ public class AddPostActivity extends AppCompatActivity {
                                 hashMap.put("pTime", timeStamp);
                                 hashMap.put("pLikes", "0");
 
+
+
                                 //path to store post data
                                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
                                 //put data in this ref
@@ -234,6 +223,8 @@ public class AddPostActivity extends AppCompatActivity {
                                                 descriptionEt.setText("");
                                                 imageIv.setImageURI(null);
                                                 image_rui = null;
+
+
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {

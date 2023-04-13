@@ -291,6 +291,7 @@ public class MainActivity extends AppCompatActivity {
                             map.put("interests", "");
                             map.put("image", "");
                             map.put("username", email);
+                            map.put("location", "");
 
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
                             DatabaseReference reference = database.getReference("Users");

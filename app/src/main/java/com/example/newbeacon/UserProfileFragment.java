@@ -57,6 +57,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class UserProfileFragment extends Fragment {
@@ -119,6 +120,25 @@ public class UserProfileFragment extends Fragment {
         adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, locations);
         spinner.setAdapter(adapter);
 
+        DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference("Users")
+                .child(firebaseAuth.getUid())
+                .child("location");
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedOption = parent.getItemAtPosition(position).toString();
+                ref2.setValue(selectedOption);
+                TextView textView = (TextView) view;
+                int width = (int) textView.getPaint().measureText(selectedOption) + textView.getPaddingLeft() + textView.getPaddingRight();
+                spinner.setLayoutParams(new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                //do nothing
+            }
+        });
+
 
         pd = new ProgressDialog(getActivity());
 
@@ -134,6 +154,7 @@ public class UserProfileFragment extends Fragment {
                     String username = "" + ds.child("username").getValue();
                     String image = "" + ds.child("image").getValue();
                     String interests = "" + ds.child("interests").getValue();
+                    String location = "" + ds.child("location").getValue();
 
                     // set/upload data to user profile
                     if (name.equals("")) {
@@ -150,6 +171,11 @@ public class UserProfileFragment extends Fragment {
                         interestsTv.setText(interests);
                     }
 
+                    for (int i = 0; i < locations.length; i++){
+                        if (location.equals(locations[i])) {
+                            spinner.setSelection(i);
+                        }
+                    }
 
                     // if image is found then set, otherwise set a default image to avatarIv
                     if (!image.equals("")){
@@ -184,7 +210,7 @@ public class UserProfileFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         //set title
         builder.setTitle("Choose Action");
-        //set irems to dialog
+        //set items to dialog
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

@@ -52,6 +52,16 @@ public class DashboardActivity extends AppCompatActivity {
         ft1.replace(R.id.content, fragment1, "");
         ft1.commit();
 
+        // JAVA
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) { return; }
+                        String token = task.getResult();
+                    }
+                });
+
         //update token
 //        @Override
 //        public void onNewToken(@NonNull String token) {

@@ -1,5 +1,7 @@
 package com.example.newbeacon.notifications;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -7,6 +9,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -18,7 +21,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.example.newbeacon.DashboardActivity;
 import com.example.newbeacon.PostDetailActivity;
@@ -33,15 +38,37 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Random;
 
 public class FirebaseMessaging extends FirebaseMessagingService {
-    private static final String ADMIN_CHANNEL_ID = "admin_channel";
 
+    @SuppressLint("NewApi")
     @Override
-    public void onMessageReceived(@NonNull RemoteMessage message) {
-        super.onMessageReceived(message);
-
-        //get current user from shared preferences
-        SharedPreferences sp = getSharedPreferences("SP_USER", MODE_PRIVATE);
-        String savedCurrentUser = sp.getString("Current_USERID", "None");
+    public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
+        String title = remoteMessage.getNotification().getTitle();
+        String text = remoteMessage.getNotification().getBody();
+        String CHANNEL_ID = "MESSAGE";
+        NotificationChannel channel = new NotificationChannel(
+                CHANNEL_ID,
+                "Message Notification",
+                NotificationManager.IMPORTANCE_HIGH);
+        getSystemService(NotificationManager.class).createNotificationChannel(channel);
+        Notification.Builder notification = new Notification.Builder(this, CHANNEL_ID)
+                .setContentTitle(title)
+                .setContentText(text)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setAutoCancel(true);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        NotificationManagerCompat.from(this).notify(1, notification.build());
+        super.onMessageReceived(remoteMessage);
+    }
+}
 
 //        String notificationType = message.getData().get("notificationType");
 //        if (notificationType.equals("PostNotification")) {
@@ -198,5 +225,3 @@ public class FirebaseMessaging extends FirebaseMessagingService {
 //        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
 //        Token token = new Token(tokenRefresh);
 //        ref.child(user.getUid()).setValue(token);
-    }
-}
