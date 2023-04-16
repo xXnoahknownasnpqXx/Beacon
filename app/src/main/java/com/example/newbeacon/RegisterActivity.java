@@ -141,7 +141,7 @@ public class RegisterActivity extends AppCompatActivity {
                             map.put("interests", "");
                             map.put("image", "");
                             map.put("username", usernametxt.getText().toString());
-                            map.put("account type", artistOrUser.getText().toString());
+                            map.put("atype", artistOrUser.getText().toString());
                             if (artistOrUser.getText().toString().equals("USER")) {
                                 map.put("location", "");
                             }

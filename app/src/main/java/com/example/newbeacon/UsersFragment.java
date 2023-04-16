@@ -139,7 +139,7 @@ public class UsersFragment extends Fragment {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     ModelUser modelUser = ds.getValue(ModelUser.class);
 
-                    if (!modelUser.getUid().equals(fUser.getUid())) {
+                    if ((!modelUser.getUid().equals(fUser.getUid()) && (modelUser.getAtype().equals("ARTIST")))) {
 
                         if(modelUser.getName().toLowerCase().contains(query.toLowerCase()) ||
                                 modelUser.getEmail().toLowerCase().contains(query.toLowerCase())) {

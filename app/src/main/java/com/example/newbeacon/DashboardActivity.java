@@ -109,7 +109,7 @@ public class DashboardActivity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     // Check the value of the "username" attribute
-                                    String account_type = snapshot.child("account type").getValue(String.class);
+                                    String account_type = snapshot.child("atype").getValue(String.class);
                                     if (account_type.equals("USER")) {
                                         // The username matches the desired value
                                         UserProfileFragment fragment2 = new UserProfileFragment();
