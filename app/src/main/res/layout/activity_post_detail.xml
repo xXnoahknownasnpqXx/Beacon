@@ -20,11 +20,11 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="3dp"
-                app:cardElevation="3dp"
-                app:contentPadding="5dp"
+                app:cardCornerRadius="3sp"
+                app:cardElevation="3sp"
+                app:contentPadding="5sp"
                 app:cardUseCompatPadding="true"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="@color/black">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                             <TextView
                                 android:id="@+id/uNameTv"
                                 android:text="Name"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 android:textSize="20sp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
@@ -64,15 +64,16 @@
                                 android:id="@+id/pTimeTv"
                                 android:text="33 min"
                                 android:textSize="20sp"
+                                android:textColor="@color/white"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
                         </LinearLayout>
 
                         <ImageButton
                             android:id="@+id/moreBtn"
-                            android:minWidth="48dp"
+                            android:minWidth="48sp"
                             android:layout_width="wrap_content"
-                            android:minHeight="48dp"
+                            android:minHeight="48sp"
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:src="@drawable/ic_more_black"
@@ -91,15 +92,15 @@
                     <TextView
                         android:id="@+id/pDescriptionTv"
                         android:text="The description of the post"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:autoLink="all"/>
                     <ImageView
                         android:id="@+id/pImageIv"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:background="@color/white"/>
+                        android:layout_height="200sp"
+                        android:background="@color/black"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -109,7 +110,7 @@
                         android:id="@+id/pLikesTv"
                         android:text="1.2k Confirmed"
                         android:layout_weight="1"
-                        android:textColor="@color/material_dynamic_primary0"
+                        android:textColor="@color/white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
