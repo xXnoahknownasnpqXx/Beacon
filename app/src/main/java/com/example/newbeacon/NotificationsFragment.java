@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,7 +68,7 @@ public class NotificationsFragment extends Fragment {
                             //add to list
                             notificationsList.add(model);
                         }
-
+                        Collections.reverse(notificationsList);
                         //adapter
                         adapterNotification = new AdapterNotification(getActivity(), notificationsList);
                         // set to Recyclerview
