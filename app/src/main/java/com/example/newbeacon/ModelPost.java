@@ -2,13 +2,13 @@ package com.example.newbeacon;
 
 public class ModelPost {
 
-    String pId, pTitle, pDescr, pLikes,pImage, pTime, uid, uEmail, uDp, uName, uUsername;
+    String pId, pTitle, pDescr, pLikes,pImage, pTime, uid, uEmail, uDp, uName, uUsername, location, genre;
 
     public ModelPost() {
 
     }
 
-    public ModelPost(String pId, String pTitle, String pDescr, String pLikes, String pImage, String pTime, String uid, String uEmail, String uDp, String uName, String uUsername) {
+    public ModelPost(String pId, String pTitle, String pDescr, String pLikes, String pImage, String pTime, String uid, String uEmail, String uDp, String uName, String uUsername, String location, String genre) {
         this.pId = pId;
         this.pTitle = pTitle;
         this.pDescr = pDescr;
@@ -21,6 +21,8 @@ public class ModelPost {
         this.uDp = uDp;
         this.uName = uName;
         this.uUsername = uUsername;
+        this.location = location;
+        this.genre = genre;
     }
 
     public String getpId() {
@@ -54,14 +56,6 @@ public class ModelPost {
     public void setpLikes(String pLikes) {
         this.pLikes = pLikes;
     }
-
-//    public String getpComments() {
-//        return pComments;
-//    }
-//
-//    public void setpComments(String pComments) {
-//        this.pComments = pComments;
-//    }
 
     public String getpImage() {
         return pImage;
@@ -117,5 +111,21 @@ public class ModelPost {
 
     public void setuUsername(String uUsername) {
         this.uUsername = uUsername;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 }

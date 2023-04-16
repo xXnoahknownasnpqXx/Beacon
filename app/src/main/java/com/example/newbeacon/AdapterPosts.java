@@ -12,10 +12,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,7 +78,7 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
     public void onBindViewHolder(@NonNull MyHolder myHolder, @SuppressLint("RecyclerView") int position) {
         //get data
         String uid = postList.get(position).getUid();
-        String uEmail = postList.get(position).getuEmail();
+        // String uEmail = postList.get(position).getuEmail();
         String uName = postList.get(position).getuName();
         String uDp = postList.get(position).getuDp();
         String pId = postList.get(position).getpId();
@@ -84,7 +86,9 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         String pDescr = postList.get(position).getpDescr();
         String pImage = postList.get(position).getpImage();
         String pTimeStamp = postList.get(position).getpTime();
-        String pLikes = postList.get(position).getpLikes(); // contains total number of likes for a post
+        String pLikes = postList.get(position).getpLikes();
+        String location = postList.get(position).getLocation();
+        String genre = postList.get(position).getGenre();// contains total number of likes for a post
         // String pComments =postList.get(position).getpComments();
 
 
@@ -95,6 +99,8 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
         //set data
         myHolder.uNameTv.setText(uName);
+        myHolder.pLocationTv.setText(location);
+        myHolder.interestsEt.setText(genre);
         myHolder.pTimeTv.setText(pTime);
         myHolder.pTitleTv.setText(pTitle);
         myHolder.pDescriptionTv.setText(pDescr);
@@ -371,13 +377,13 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
         //views from row_posts.xml
         ImageView uPictureIv, pImageIv;
-        TextView uNameTv, pTimeTv, pTitleTv, pDescriptionTv, pLikesTv
-                //pCommentsTv
-                ;
+        TextView uNameTv, pTimeTv, pTitleTv, pDescriptionTv, pLikesTv, pLocationTv, pGenreTv;
         ImageButton moreBtn;
+        TextView interestsEt;
         Button likeBtn;
                 //commentBtn,
 //        shareBtn;
+
         LinearLayout profileLayout;
 
 
@@ -387,6 +393,8 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             //init value
             uPictureIv = itemView.findViewById(R.id.uPictureIv);
             pImageIv = itemView.findViewById(R.id.pImageIv);
+            pLocationTv = itemView.findViewById(R.id.pLocationTv);
+            interestsEt = itemView.findViewById(R.id.pGenreTv);
             uNameTv = itemView.findViewById(R.id.uNameTv);
             pTimeTv = itemView.findViewById(R.id.pTimeTv);
             pTitleTv = itemView.findViewById(R.id.pTitleTv);

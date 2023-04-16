@@ -27,7 +27,7 @@
         <LinearLayout
             android:id="@+id/profileLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80sp"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
@@ -35,8 +35,8 @@
                 android:id="@+id/uPictureIv"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_default_img_grey"
-                android:layout_width="40sp"
-                android:layout_height="40sp"
+                android:layout_width="60sp"
+                android:layout_height="60sp"
                 app:civ_border_width="0.5sp"
                 app:civ_border_color="@color/white">
             </de.hdodenhof.circleimageview.CircleImageView>
@@ -52,10 +52,33 @@
                     android:id="@+id/uNameTv"
                     android:text="Name"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0sp"
+                    android:id="@+id/pGenreTv"
+                    android:text="Genre"
+                    android:textColor="@color/white"
+                    android:textSize="12sp">
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/pLocationTv"
+                    android:layout_marginTop="5sp"
+                    android:text="Location"
+                    android:textColor="@color/white"
+                    android:textSize="12sp">
+                </TextView>
+
+
+
 
             </LinearLayout>
             
@@ -99,7 +122,7 @@
         <ImageView
             android:id="@+id/pImageIv"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="500dp"
             android:background="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"

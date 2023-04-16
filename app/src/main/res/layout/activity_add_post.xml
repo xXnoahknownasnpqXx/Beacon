@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     tools:context=".AddPostActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,43 +17,85 @@
             android:id="@+id/pTitleEt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2sp"
             android:background="@drawable/edittextstyle"
             android:hint="Enter title"
             android:minHeight="48sp"
             android:padding="10sp"
             android:singleLine="true"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/locationTv"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/locationLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"></EditText>
 
-        <TextView
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="left"
+            android:id="@+id/locationLayout"
+            android:background="@drawable/edittextstyle"
+            app:layout_constraintBottom_toTopOf="@id/genreTv"
             app:layout_constraintTop_toBottomOf="@+id/pTitleEt"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:padding="10sp"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittextstyle"
+                android:padding="10sp"
+                android:text="Location"
+                android:textColor="@color/white"
+                android:minHeight="50sp"
+                android:textSize="18sp"
+                android:singleLine="true"
+                android:id="@+id/locationTv"
+                />
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:minWidth="100sp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1sp"
+                android:minHeight="48sp"
+                android:id="@+id/locationMenu"
+                android:spinnerMode="dropdown"
+                android:background="@color/white">
+            </Spinner>
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/genreTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittextstyle"
+            android:hint="Genre"
+            android:textColorHint="@color/white"
             android:minHeight="48sp"
-            android:text="Location"
+            android:padding="10sp"
             android:singleLine="true"
-            android:id="@+id/locationTv"
-            app:layout_constraintBottom_toTopOf="@id/pImageIv"/>
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/locationLayout"
+            app:layout_constraintBottom_toTopOf="@id/pImageIv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"></EditText>
+
+
 
         <ImageView
             android:id="@+id/pImageIv"
             android:layout_width="0dp"
-            android:src="@drawable/ic_add_white"
             android:layout_height="wrap_content"
-            android:background="#1d12e3"
-            android:minHeight="200sp"
+            android:background="@drawable/edittextstyle"
+            android:minHeight="500sp"
             app:layout_constraintBottom_toTopOf="@+id/pDescriptionEt"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/locationTv"></ImageView>
+            app:layout_constraintTop_toBottomOf="@+id/genreTv"></ImageView>
 
         <EditText
             android:id="@+id/pDescriptionEt"
@@ -61,10 +104,11 @@
             android:background="@drawable/edittextstyle"
             android:gravity="start"
             android:hint="Enter description"
+            android:textColorHint="@color/white"
             android:inputType="textCapSentences|textMultiLine"
             android:minHeight="120sp"
             android:padding="10sp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@+id/pUploadBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

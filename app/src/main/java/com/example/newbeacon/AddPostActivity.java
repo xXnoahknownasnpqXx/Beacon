@@ -24,9 +24,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -66,8 +71,12 @@ public class AddPostActivity extends AppCompatActivity {
 
     private static final String TAG = "PERMISSION_TAG";
 
-    EditText titleEt, descriptionEt;
+    EditText titleEt, descriptionEt, genreEt;
     ImageView imageIv;
+    TextView locationTv;
+    Spinner locationMenu;
+    private String[] locations;
+    ArrayAdapter<String> adapter;
     Button uploadBtn;
 
     //user info
@@ -123,6 +132,30 @@ public class AddPostActivity extends AppCompatActivity {
         descriptionEt = findViewById(R.id.pDescriptionEt);
         imageIv = findViewById(R.id.pImageIv);
         uploadBtn = findViewById(R.id.pUploadBtn);
+        locationTv = findViewById(R.id.locationTv);
+        locationMenu = findViewById(R.id.locationMenu);
+        genreEt = findViewById(R.id.genreTv);
+
+        locations = new String[]{"Rochester Hills", "Troy", "Lake Orion", "Pontiac"};
+        adapter = new ArrayAdapter<>(AddPostActivity.this, android.R.layout.simple_spinner_dropdown_item, locations);
+        locationMenu.setAdapter(adapter);
+
+
+        locationMenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedOption = parent.getItemAtPosition(position).toString();
+                TextView textView = (TextView) view;
+                int width = (int) textView.getPaint().measureText(selectedOption) + textView.getPaddingLeft() + textView.getPaddingRight();
+                locationMenu.setLayoutParams(new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                //do nothing
+            }
+        });
+
 
         imageIv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +169,8 @@ public class AddPostActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String title = titleEt.getText().toString().trim();
                 String description = descriptionEt.getText().toString().trim();
+                String genre = genreEt.getText().toString().trim();
+                String location = locationMenu.toString().trim();
                 if(TextUtils.isEmpty(title)){
                     Toast.makeText(AddPostActivity.this, "Enter Title", Toast.LENGTH_SHORT).show();
                     return;
@@ -171,7 +206,7 @@ public class AddPostActivity extends AppCompatActivity {
 
         String filePathandName = "Posts/" + "post_" + timeStamp;
 
-        if (imageIv.getDrawable() != null){
+        if ((imageIv.getDrawable() != null)){
             Bitmap bitmap = ((BitmapDrawable)imageIv.getDrawable()).getBitmap();
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -206,6 +241,8 @@ public class AddPostActivity extends AppCompatActivity {
                                 hashMap.put("pImage", downloadUri);
                                 hashMap.put("pTime", timeStamp);
                                 hashMap.put("pLikes", "0");
+                                hashMap.put("plocation", locationMenu.getSelectedItem().toString());
+                                hashMap.put("pGenre", genreEt.getText().toString());
 
 
 
@@ -275,6 +312,8 @@ public class AddPostActivity extends AppCompatActivity {
             hashMap.put("pImage", "noImage");
             hashMap.put("pTime", timeStamp);
             hashMap.put("pLikes", "0");
+            hashMap.put("plocation", locationMenu.getSelectedItem().toString());
+            hashMap.put("pGenre", genreEt.getText().toString());
 
             //path to store post data
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
