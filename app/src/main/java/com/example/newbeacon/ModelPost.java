@@ -2,18 +2,20 @@ package com.example.newbeacon;
 
 public class ModelPost {
 
-    String pId, pTitle, pDescr, pLikes,pImage, pTime, uid, uEmail, uDp, uName, uUsername, location, genre;
+    String pId, pTitle, pDescr, pLikes,pImage, pTime, uid, uEmail, uDp, uName, uUsername, pLocation, pGenre;
 
     public ModelPost() {
 
     }
 
-    public ModelPost(String pId, String pTitle, String pDescr, String pLikes, String pImage, String pTime, String uid, String uEmail, String uDp, String uName, String uUsername, String location, String genre) {
+    public ModelPost(String pId, String pTitle, String pDescr, String pLikes, String pImage, String pTime,
+                     String uid, String uEmail,
+                     String uDp, String uName, String uUsername,
+                     String pLocation, String pGenre) {
         this.pId = pId;
         this.pTitle = pTitle;
         this.pDescr = pDescr;
         this.pLikes = pLikes;
-        // this.pComments = pComments;
         this.pImage = pImage;
         this.pTime = pTime;
         this.uid = uid;
@@ -21,8 +23,8 @@ public class ModelPost {
         this.uDp = uDp;
         this.uName = uName;
         this.uUsername = uUsername;
-        this.location = location;
-        this.genre = genre;
+        this.pLocation = pLocation;
+        this.pGenre = pGenre;
     }
 
     public String getpId() {
@@ -113,19 +115,19 @@ public class ModelPost {
         this.uUsername = uUsername;
     }
 
-    public String getLocation() {
-        return location;
+    public String getpLocation() {
+        return pLocation;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setpLocation(String pLocation) {
+        this.pLocation = pLocation;
     }
 
-    public String getGenre() {
-        return genre;
+    public String getpGenre() {
+        return pGenre;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setpGenre(String pGenre) {
+        this.pGenre = pGenre;
     }
 }

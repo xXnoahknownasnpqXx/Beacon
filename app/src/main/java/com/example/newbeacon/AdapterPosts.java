@@ -86,10 +86,9 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         String pDescr = postList.get(position).getpDescr();
         String pImage = postList.get(position).getpImage();
         String pTimeStamp = postList.get(position).getpTime();
-        String pLikes = postList.get(position).getpLikes();
-        String location = postList.get(position).getLocation();
-        String genre = postList.get(position).getGenre();// contains total number of likes for a post
-        // String pComments =postList.get(position).getpComments();
+        String pLikes = postList.get(position).getpLikes();// contains total number of likes for a post
+        String location = postList.get(position).getpLocation();
+        String genre = postList.get(position).getpGenre();
 
 
         //convert timestamp to dd/mm/yyy hh:mm am/pm
@@ -182,13 +181,7 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             }
         });
 
-//        myHolder.shareBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //will implement later
-//                Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
         myHolder.profileLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -400,11 +393,8 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             pTitleTv = itemView.findViewById(R.id.pTitleTv);
             pDescriptionTv = itemView.findViewById(R.id.pDescriptionTv);
             pLikesTv = itemView.findViewById(R.id.pLikesTv);
-            //pCommentsTv = itemView.findViewById(R.id.pCommentsTv);
             moreBtn = itemView.findViewById(R.id.moreBtn);
             likeBtn = itemView.findViewById(R.id.likeBtn);
-            // commentBtn = itemView.findViewById(R.id.commentBtn);
-//            shareBtn = itemView.findViewById(R.id.shareBtn);
             profileLayout = itemView.findViewById(R.id.profileLayout);
 
         }

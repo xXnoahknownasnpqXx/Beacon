@@ -170,7 +170,7 @@ public class AddPostActivity extends AppCompatActivity {
                 String title = titleEt.getText().toString().trim();
                 String description = descriptionEt.getText().toString().trim();
                 String genre = genreEt.getText().toString().trim();
-                String location = locationMenu.toString().trim();
+                String location = locationMenu.getSelectedItem().toString().trim();
                 if(TextUtils.isEmpty(title)){
                     Toast.makeText(AddPostActivity.this, "Enter Title", Toast.LENGTH_SHORT).show();
                     return;
@@ -180,16 +180,21 @@ public class AddPostActivity extends AppCompatActivity {
                     return;
                 }
 
+                if(TextUtils.isEmpty(genre)){
+                    Toast.makeText(AddPostActivity.this, "Enter Genre", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
 
                 if(image_rui == null){
                     //post without image
-                    uploadData(title, description);
+                    uploadData(title, description, location, genre);
                     Intent intent = new Intent(AddPostActivity.this, DashboardActivity.class);
                     startActivity(intent);
                 }
                 else{
                     //post with image
-                    uploadData(title, description);
+                    uploadData(title, description, location, genre);
                     Intent intent = new Intent(AddPostActivity.this, DashboardActivity.class);
                     startActivity(intent);
                 }
@@ -197,7 +202,7 @@ public class AddPostActivity extends AppCompatActivity {
         });
     }
 
-    private void uploadData(final String title, final String description) {
+    private void uploadData(final String title, final String description, String location, String genre) {
         pd.setMessage("Publishing Post");
         pd.show();
 
@@ -241,8 +246,8 @@ public class AddPostActivity extends AppCompatActivity {
                                 hashMap.put("pImage", downloadUri);
                                 hashMap.put("pTime", timeStamp);
                                 hashMap.put("pLikes", "0");
-                                hashMap.put("plocation", locationMenu.getSelectedItem().toString());
-                                hashMap.put("pGenre", genreEt.getText().toString());
+                                hashMap.put("pLocation", location);
+                                hashMap.put("pGenre", genre);
 
 
 
@@ -256,10 +261,10 @@ public class AddPostActivity extends AppCompatActivity {
                                                 //added in database
                                                 pd.dismiss();
                                                 Toast.makeText(AddPostActivity.this, "Post Published", Toast.LENGTH_SHORT).show();
-                                                titleEt.setText("");
-                                                descriptionEt.setText("");
-                                                imageIv.setImageURI(null);
-                                                image_rui = null;
+//                                                titleEt.setText("");
+//                                                descriptionEt.setText("");
+//                                                imageIv.setImageURI(null);
+//                                                image_rui = null;
 
 
                                             }
@@ -312,8 +317,8 @@ public class AddPostActivity extends AppCompatActivity {
             hashMap.put("pImage", "noImage");
             hashMap.put("pTime", timeStamp);
             hashMap.put("pLikes", "0");
-            hashMap.put("plocation", locationMenu.getSelectedItem().toString());
-            hashMap.put("pGenre", genreEt.getText().toString());
+            hashMap.put("pLocation", location);
+            hashMap.put("pGenre", genre);
 
             //path to store post data
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
@@ -454,13 +459,6 @@ public class AddPostActivity extends AppCompatActivity {
         });
         // create and show dialog
         builder.create().show();
-    }
-
-    private void pickFromGallery() {
-        //intent to pick image from gallery
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent, IMAGE_PICK_GALLERY_CODE);
     }
 
     private void pickFromCamera() {
