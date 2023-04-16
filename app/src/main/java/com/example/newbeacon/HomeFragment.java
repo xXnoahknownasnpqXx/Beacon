@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment {
     private void loadPosts() {
         //path of all posts
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
-        DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference("Users");
+        //DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference("Users");
         //get all data from this ref
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -83,31 +83,31 @@ public class HomeFragment extends Fragment {
                 for(DataSnapshot ds: snapshot.getChildren()){
                     ModelPost modelPost = ds.getValue(ModelPost.class);
 
-                    ref2.child(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            postList.clear();
-                            String account_type = snapshot.child("account type").getValue(String.class);
-                            if (account_type.equals("USER")) {
-                                String location = snapshot.child("location").getValue(String.class);
-                                if (location.equals(modelPost.getpLocation())) {
-                                    postList.add(modelPost);
-                                    //adapter
-                                    adapterPosts = new AdapterPosts(getActivity(), postList);
-                                    //set adapter to recyclerview
-                                    recyclerView.setAdapter(adapterPosts);
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-//                    postList.add(modelPost);
-                    
-
+//                    ref2.child(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                            postList.clear();
+//                            String account_type = snapshot.child("account type").getValue(String.class);
+//                            if (account_type.equals("USER")) {
+//                                String location = snapshot.child("location").getValue(String.class);
+//                                if (location.equals(modelPost.getpLocation())) {
+                    postList.add(modelPost);
+                    //adapter
+                    adapterPosts = new AdapterPosts(getActivity(), postList);
+                    //set adapter to recyclerview
+                    recyclerView.setAdapter(adapterPosts);
+//                                }
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                        }
+//                    });
+////                    postList.add(modelPost);
+//
+//
                 }
             }
 
