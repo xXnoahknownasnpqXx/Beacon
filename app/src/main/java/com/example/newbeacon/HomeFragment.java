@@ -40,6 +40,7 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
     List<ModelPost> postList;
     AdapterPosts adapterPosts;
+    private ValueEventListener postListener;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -73,52 +74,79 @@ public class HomeFragment extends Fragment {
 
     private void loadPosts() {
         //path of all posts
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
-        //DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference("Users");
-        //get all data from this ref
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                postList.clear();
-                for(DataSnapshot ds: snapshot.getChildren()){
-                    ModelPost modelPost = ds.getValue(ModelPost.class);
+//        DatabaseReference postsRef = FirebaseDatabase.getInstance().getReference("Posts");
+//        //DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("Users");
+//        //get all data from this ref
+//        postsRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                postList.clear();
+//                for(DataSnapshot ds: snapshot.getChildren()){
+//                    ModelPost modelPost = ds.getValue(ModelPost.class);
+//
+//
+//                    postList.add(modelPost);
+//                    adapterPosts = new AdapterPosts(getActivity(), postList);
+//                    recyclerView.setAdapter(adapterPosts);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                //in case of error
+//                //Toast.makeText(getActivity(), ""+error.getMessage(), Toast.LENGTH_SHORT).show();
+//                //TODO FIGURE OUT WHY THIS IS CAUSING PROBLEMS
+//            }
+//        });
+//    }
+            // path of all posts
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
+            DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference("Users");
 
-//                    ref2.child(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                            postList.clear();
-//                            String account_type = snapshot.child("account type").getValue(String.class);
-//                            if (account_type.equals("USER")) {
-//                                String location = snapshot.child("location").getValue(String.class);
-//                                if (location.equals(modelPost.getpLocation())) {
-                    postList.add(modelPost);
-                    //adapter
-                    adapterPosts = new AdapterPosts(getActivity(), postList);
-                    //set adapter to recyclerview
-                    recyclerView.setAdapter(adapterPosts);
-//                                }
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError error) {
-//
-//                        }
-//                    });
-////                    postList.add(modelPost);
-//
-//
+            if (postListener != null) {
+                // remove previous listener to prevent duplicate data
+                ref.removeEventListener(postListener);
+            }
+
+            postListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    postList.clear();
+                    for(DataSnapshot ds: snapshot.getChildren()){
+                        ModelPost modelPost = ds.getValue(ModelPost.class);
+
+                        ref2.child(firebaseAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                String account_type = snapshot.child("Atype").getValue(String.class);
+                                if (account_type.equals("USER")) {
+                                    String location = snapshot.child("location").getValue(String.class);
+                                    if (location.equals(modelPost.getpLocation())) {
+                                        postList.add(modelPost);
+                                        //adapter
+                                        adapterPosts = new AdapterPosts(getActivity(), postList);
+                                        //set adapter to recyclerview
+                                        recyclerView.setAdapter(adapterPosts);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                //in case of error
-                //Toast.makeText(getActivity(), ""+error.getMessage(), Toast.LENGTH_SHORT).show();
-                //TODO FIGURE OUT WHY THIS IS CAUSING PROBLEMS
-            }
-        });
-    }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // Handle error
+                }
+            };
+
+            ref.addValueEventListener(postListener);
+        }
 
     private void searchPosts(String searchQuery){
         //path of all posts
