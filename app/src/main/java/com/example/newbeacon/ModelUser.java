@@ -2,13 +2,13 @@ package com.example.newbeacon;
 
 public class ModelUser {
 
-    String name, username, email, search, image, uid, location, atype;
+    String name, username, email, search, image, uid, location, Atype;
 
     public ModelUser() {
 
     }
 
-    public ModelUser(String name, String username, String email, String search, String image, String uid, String location, String atype) {
+    public ModelUser(String name, String username, String email, String search, String image, String uid, String location, String Atype) {
         this.name = name;
         this.username = username;
         this.email = email;
@@ -16,7 +16,7 @@ public class ModelUser {
         this.image = image;
         this.uid = uid;
         this.location = location;
-        this.atype = atype;
+        this.Atype = Atype;
     }
 
     public String getName() {
@@ -76,10 +76,10 @@ public class ModelUser {
     }
 
     public String getAtype() {
-        return atype;
+        return Atype;
     }
 
     public void setAtype(String atype) {
-        this.atype = atype;
+        this.Atype = Atype;
     }
 }

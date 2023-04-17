@@ -140,7 +140,6 @@ public class UsersFragment extends Fragment {
                     ModelUser modelUser = ds.getValue(ModelUser.class);
 
                     if ((!modelUser.getUid().equals(fUser.getUid()) && (modelUser.getAtype().equals("ARTIST")))) {
-
                         if(modelUser.getName().toLowerCase().contains(query.toLowerCase()) ||
                                 modelUser.getEmail().toLowerCase().contains(query.toLowerCase())) {
                                 userList.add(modelUser);
