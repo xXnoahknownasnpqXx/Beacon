@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -112,8 +113,11 @@ public class UsersFragment extends Fragment {
                 for (DataSnapshot ds: snapshot.getChildren()) {
                     ModelUser modelUser = ds.getValue(ModelUser.class);
 
+
                     if (!modelUser.getUid().equals(fUser.getUid())){
-                        userList.add(modelUser);
+                        if(modelUser.getAtype().equals("ARTIST")){
+                            userList.add(modelUser);
+                        }
                     }
 
                     adapterUsers = new AdapterUsers(getActivity(), userList);
@@ -132,6 +136,7 @@ public class UsersFragment extends Fragment {
         final FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
 
+
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -139,10 +144,12 @@ public class UsersFragment extends Fragment {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     ModelUser modelUser = ds.getValue(ModelUser.class);
 
-                    if ((!modelUser.getUid().equals(fUser.getUid()) && (modelUser.getAtype().equals("ARTIST")))) {
-                        if(modelUser.getName().toLowerCase().contains(query.toLowerCase()) ||
-                                modelUser.getEmail().toLowerCase().contains(query.toLowerCase())) {
+                    if (!modelUser.getUid().equals(fUser.getUid())) {
+                        if(modelUser.getAtype().equals("ARTIST")) {
+                            if (modelUser.getName().toLowerCase().contains(query.toLowerCase()) ||
+                                    modelUser.getEmail().toLowerCase().contains(query.toLowerCase())) {
                                 userList.add(modelUser);
+                            }
                         }
                     }
 

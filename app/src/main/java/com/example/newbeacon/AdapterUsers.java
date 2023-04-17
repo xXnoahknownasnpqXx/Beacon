@@ -46,6 +46,7 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.MyHolder> {
         String userName = userList.get(position).getName();
         String userEmail = userList.get(position).getEmail();
         String userUsername = userList.get(position).getUsername();
+        String accType = userList.get(position).getAtype();
 
         //set data
         holder.mNameTv.setText(userName);
