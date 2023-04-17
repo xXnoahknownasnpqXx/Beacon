@@ -525,6 +525,11 @@ public class UserProfileFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main, menu);
+
+        MenuItem addPost = menu.findItem(R.id.action_add_post);
+
+        addPost.setVisible(false);
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 

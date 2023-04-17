@@ -43,10 +43,27 @@ public class NotificationsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_notifications, container, false);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
         //init recyclerview
         notificationsRv = view.findViewById(R.id.notificationsRv);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+//        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
+//        userRef.child(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                // Check the value of the "username" attribute
+//                String account_type = snapshot.child("Atype").getValue(String.class);
+//                if (account_type.equals("USER")) {
+//                    view.setVisibility(View.GONE);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
         getAllNotifications();
 

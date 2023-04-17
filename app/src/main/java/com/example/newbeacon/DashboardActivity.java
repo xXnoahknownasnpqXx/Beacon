@@ -46,6 +46,26 @@ public class DashboardActivity extends AppCompatActivity {
         BottomNavigationView navigationView = findViewById(R.id.navigationView);
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
 
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
+        if (firebaseAuth.getUid() != null) {
+            userRef.child(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    // Check the value of the "username" attribute
+                    String account_type = snapshot.child("Atype").getValue(String.class);
+                    if (account_type.equals("USER")) {
+                        navigationView.getMenu().removeItem(R.id.nav_notification);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+
+
         actionBar.setTitle("Feed");
         HomeFragment fragment1 = new HomeFragment();
         FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
@@ -113,16 +133,26 @@ public class DashboardActivity extends AppCompatActivity {
                                     if (account_type.equals("USER")) {
                                         // The username matches the desired value
                                         UserProfileFragment fragment2 = new UserProfileFragment();
-                                        FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
-                                        ft2.replace(R.id.content, fragment2, "");
-                                        ft2.commit();
+                                        try {
+                                            FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
+                                            ft2.replace(R.id.content, fragment2, "");
+                                            ft2.commit();
+                                        }
+                                        catch (IllegalStateException ignored) {
+                                            //no solution
+                                        }
 
                                     } else {
 //                                        // The username does not match the desired value
                                         ProfileFragment fragment2 = new ProfileFragment();
-                                        FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
-                                        ft2.replace(R.id.content, fragment2, "");
-                                        ft2.commit();
+                                        try {
+                                            FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
+                                            ft2.replace(R.id.content, fragment2, "");
+                                            ft2.commit();
+                                        }
+                                        catch (IllegalStateException ignored) {
+                                            //no solution
+                                        }
                                     }
                                 }
 

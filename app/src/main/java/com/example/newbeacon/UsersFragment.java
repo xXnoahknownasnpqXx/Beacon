@@ -185,6 +185,26 @@ public class UsersFragment extends Fragment {
 
         //SearchView
         MenuItem item= menu.findItem(R.id.action_search);
+        MenuItem addPost = menu.findItem(R.id.action_add_post);
+
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("Users");
+
+        usersRef.child(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // Check the value of the "username" attribute
+                String account_type = snapshot.child("Atype").getValue(String.class);
+                if (account_type.equals("USER")) {
+                    addPost.setVisible(false);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
 
         //search listener

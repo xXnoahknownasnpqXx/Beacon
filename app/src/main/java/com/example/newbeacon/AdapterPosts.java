@@ -51,6 +51,7 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
     String myUid;
 
+
     private DatabaseReference likesRef; // for likes database node
     private DatabaseReference postsRef; //reference of posts
 
@@ -167,7 +168,10 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                                 likesRef.child(postIde).child(myUid).setValue("Liked");
                                 mProcessLike = false;
 
-                                addToHisNotifications("" + uid, "" + pId, "Confirmed their presence");
+                                if (!uid.equals(myUid)) {
+                                    addToHisNotifications("" + uid, "" + pId, "Confirmed their presence");
+                                }
+
                             }
                         }
                     }

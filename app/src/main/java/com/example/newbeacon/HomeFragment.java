@@ -128,6 +128,12 @@ public class HomeFragment extends Fragment {
                                         //set adapter to recyclerview
                                         recyclerView.setAdapter(adapterPosts);
                                     }
+                                } else {
+                                    postList.add(modelPost);
+                                    //adapter
+                                    adapterPosts = new AdapterPosts(getActivity(), postList);
+                                    //set adapter to recyclerview
+                                    recyclerView.setAdapter(adapterPosts);
                                 }
                             }
 
@@ -202,6 +208,26 @@ public class HomeFragment extends Fragment {
         inflater.inflate(R.menu.menu_main, menu);
 
         MenuItem item = menu.findItem(R.id.action_search);
+        MenuItem addPost = menu.findItem(R.id.action_add_post);
+
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("Users");
+
+        usersRef.child(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // Check the value of the "username" attribute
+                String account_type = snapshot.child("Atype").getValue(String.class);
+                if (account_type.equals("USER")) {
+                    addPost.setVisible(false);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         SearchView searchView = (SearchView)MenuItemCompat.getActionView(item);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
