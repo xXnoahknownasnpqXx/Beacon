@@ -108,15 +108,15 @@ public class AdapterNotification extends RecyclerView.Adapter<AdapterNotificatio
         holder.timeTv.setText(pTime);
 
         //click notification to open post
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //start PostDetailActivity
-                Intent intent = new Intent(context, PostDetailActivity.class);
-                intent.putExtra("postId", pId); //will get detail of post using this id, its id of the post clicked
-                context.startActivity(intent);
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //start PostDetailActivity
+//                Intent intent = new Intent(context, PostDetailActivity.class);
+//                intent.putExtra("postId", pId); //will get detail of post using this id, its id of the post clicked
+//                context.startActivity(intent);
+//            }
+//        });
 
         //long press to show delete notification option
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {

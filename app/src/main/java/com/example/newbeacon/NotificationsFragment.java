@@ -48,23 +48,6 @@ public class NotificationsFragment extends Fragment {
         //init recyclerview
         notificationsRv = view.findViewById(R.id.notificationsRv);
 
-//        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
-//        userRef.child(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                // Check the value of the "username" attribute
-//                String account_type = snapshot.child("Atype").getValue(String.class);
-//                if (account_type.equals("USER")) {
-//                    view.setVisibility(View.GONE);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-
         getAllNotifications();
 
         return view;
