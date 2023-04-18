@@ -125,6 +125,7 @@ public class DashboardActivity extends AppCompatActivity {
                     // handle item clicks
                     switch(menuItem.getItemId()){
                         case R.id.nav_home:
+                            isProfileOpen = false;
                             // home fragment transaction
                             actionBar.setTitle("Beacon");
                             actionBar.setBackgroundDrawable(new ColorDrawable(getColor(R.color.black)));
@@ -139,7 +140,9 @@ public class DashboardActivity extends AppCompatActivity {
                             actionBar.setBackgroundDrawable(new ColorDrawable(getColor(R.color.black)));
 
                             ref = FirebaseDatabase.getInstance().getReference("Users");
-                            ref.child(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
+
+
+                            ref.child(firebaseAuth.getUid()).child("Atype").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -148,7 +151,7 @@ public class DashboardActivity extends AppCompatActivity {
                                     }
                                     // Check the value of the "username" attribute
                                     Log.d("Debug test*************","******************************************");
-                                    String account_type = snapshot.child("Atype").getValue(String.class);
+                                    String account_type = snapshot.getValue(String.class);
                                     if (account_type.equals("USER")) {
                                         // The username matches the desired value
                                         UserProfileFragment fragment2 = new UserProfileFragment();
@@ -185,6 +188,7 @@ public class DashboardActivity extends AppCompatActivity {
 
                             return true;
                         case R.id.nav_users:
+                            isProfileOpen = false;
                             // users fragment transaction
                             actionBar.setTitle("Beacon");
                             actionBar.setBackgroundDrawable(new ColorDrawable(getColor(R.color.black)));
@@ -197,6 +201,7 @@ public class DashboardActivity extends AppCompatActivity {
 
                         case R.id.nav_notification:
                             // users fragment transaction
+                            isProfileOpen = false;
                             actionBar.setTitle("Beacon");
                             actionBar.setBackgroundDrawable(new ColorDrawable(getColor(R.color.black)));
 
