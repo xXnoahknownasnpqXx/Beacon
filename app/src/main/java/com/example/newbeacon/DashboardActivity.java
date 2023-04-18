@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -39,7 +40,9 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         actionBar = getSupportActionBar();
-        actionBar.setTitle("Profile");
+        actionBar.setTitle("Beacon");
+        actionBar.setBackgroundDrawable(new ColorDrawable(getColor(R.color.black)));
+
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -66,7 +69,9 @@ public class DashboardActivity extends AppCompatActivity {
         }
 
 
-        actionBar.setTitle("Feed");
+        actionBar.setTitle("Beacon");
+        actionBar.setBackgroundDrawable(new ColorDrawable(getColor(R.color.black)));
+
         HomeFragment fragment1 = new HomeFragment();
         FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
         ft1.replace(R.id.content, fragment1, "");
@@ -115,7 +120,8 @@ public class DashboardActivity extends AppCompatActivity {
                     switch(menuItem.getItemId()){
                         case R.id.nav_home:
                             // home fragment transaction
-                            actionBar.setTitle("Home");
+                            actionBar.setTitle("Beacon");
+                            actionBar.setBackgroundDrawable(new ColorDrawable(getColor(R.color.black)));
                             HomeFragment fragment1 = new HomeFragment();
                             FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
                             ft1.replace(R.id.content, fragment1, "");
@@ -123,7 +129,9 @@ public class DashboardActivity extends AppCompatActivity {
                             return true;
                         case R.id.nav_profile:
                             // profile fragment transaction
-                            actionBar.setTitle("Profile");
+                            actionBar.setTitle("Beacon");
+                            actionBar.setBackgroundDrawable(new ColorDrawable(getColor(R.color.black)));
+
                             ref = FirebaseDatabase.getInstance().getReference("Users");
                             ref.child(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
                                 @Override
@@ -165,7 +173,9 @@ public class DashboardActivity extends AppCompatActivity {
                             return true;
                         case R.id.nav_users:
                             // users fragment transaction
-                            actionBar.setTitle("Users");
+                            actionBar.setTitle("Beacon");
+                            actionBar.setBackgroundDrawable(new ColorDrawable(getColor(R.color.black)));
+
                             UsersFragment fragment3 = new UsersFragment();
                             FragmentTransaction ft3 = getSupportFragmentManager().beginTransaction();
                             ft3.replace(R.id.content, fragment3, "");
@@ -174,7 +184,9 @@ public class DashboardActivity extends AppCompatActivity {
 
                         case R.id.nav_notification:
                             // users fragment transaction
-                            actionBar.setTitle("Notifications");
+                            actionBar.setTitle("Beacon");
+                            actionBar.setBackgroundDrawable(new ColorDrawable(getColor(R.color.black)));
+
                             NotificationsFragment fragment4 = new NotificationsFragment();
                             FragmentTransaction ft4 = getSupportFragmentManager().beginTransaction();
                             ft4.replace(R.id.content, fragment4, "");

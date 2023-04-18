@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.widget.CompoundButton;
 import android.widget.Toast;
@@ -29,7 +30,8 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Settings");
+        actionBar.setTitle("Beacon");
+        actionBar.setBackgroundDrawable(new ColorDrawable(getColor(R.color.black)));
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 

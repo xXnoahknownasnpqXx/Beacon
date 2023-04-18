@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -48,7 +49,8 @@ public class ThereProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_there_profile);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Profile");
+        actionBar.setTitle("Beacon");
+        actionBar.setBackgroundDrawable(new ColorDrawable(getColor(R.color.black)));
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 

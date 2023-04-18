@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -47,7 +48,8 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Create Account");
+        actionBar.setTitle("Beacon");
+        actionBar.setBackgroundDrawable(new ColorDrawable(getColor(R.color.black)));
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 

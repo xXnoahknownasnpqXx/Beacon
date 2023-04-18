@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -65,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
 
         // setting up and customizing action bar
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Login");
+        actionBar.setTitle("Beacon");
+        actionBar.setBackgroundDrawable(new ColorDrawable(getColor(R.color.black)));
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 

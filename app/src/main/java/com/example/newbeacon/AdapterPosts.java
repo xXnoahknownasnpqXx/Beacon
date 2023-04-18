@@ -72,6 +72,8 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         //inflate layout row_post.xml
         View view = LayoutInflater.from(context).inflate(R.layout.row_posts, parent, false);
 
+
+
         return new MyHolder(view);
     }
 
@@ -152,7 +154,8 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                 final int pLikes = Integer.parseInt(postList.get(position).getpLikes());
                 mProcessLike = true;
                 final String postIde = postList.get(position).getpId();
-                likesRef.addValueEventListener(new ValueEventListener() {
+
+                likesRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (mProcessLike) {
@@ -166,7 +169,6 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                                 postsRef.child(postIde).child("pLikes").setValue(""+(pLikes + 1));
                                 likesRef.child(postIde).child(myUid).setValue("Liked");
                                 mProcessLike = false;
-
                                 if (!uid.equals(myUid)) {
                                     addToHisNotifications("" + uid, "" + pId,
                                             "Confirmed their presence");
