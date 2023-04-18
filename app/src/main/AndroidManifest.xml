@@ -21,9 +21,9 @@
         <activity
             android:name=".ThereProfileActivity"
             android:exported="false" />
-        <activity
-            android:name=".PostDetailActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".PostDetailActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".SettingsActivity"
             android:exported="false" />

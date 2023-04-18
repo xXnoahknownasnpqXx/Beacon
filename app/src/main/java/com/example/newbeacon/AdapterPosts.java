@@ -170,8 +170,7 @@ public class AdapterPosts  extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                                 likesRef.child(postIde).child(myUid).setValue("Liked");
                                 mProcessLike = false;
                                 if (!uid.equals(myUid)) {
-                                    addToHisNotifications("" + uid, "" + pId,
-                                            "Confirmed their presence");
+                                    addToHisNotifications("" + uid, "" + pId, "Confirmed their presence");
                                 }
 
                             }

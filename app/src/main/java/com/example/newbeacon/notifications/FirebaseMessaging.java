@@ -26,7 +26,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.newbeacon.DashboardActivity;
-import com.example.newbeacon.PostDetailActivity;
+//import com.example.newbeacon.PostDetailActivity;
 import com.example.newbeacon.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

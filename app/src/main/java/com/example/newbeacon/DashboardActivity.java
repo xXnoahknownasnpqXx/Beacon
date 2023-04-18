@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -31,8 +32,13 @@ public class DashboardActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference ref;
     private ActionBar actionBar;
+    static boolean isProfileOpen;
 
     String mUID;
+
+    public DashboardActivity() {
+        isProfileOpen = false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +142,12 @@ public class DashboardActivity extends AppCompatActivity {
                             ref.child(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                    if (isProfileOpen == true) {
+                                        return;
+                                    }
                                     // Check the value of the "username" attribute
+                                    Log.d("Debug test*************","******************************************");
                                     String account_type = snapshot.child("Atype").getValue(String.class);
                                     if (account_type.equals("USER")) {
                                         // The username matches the desired value
@@ -145,6 +156,7 @@ public class DashboardActivity extends AppCompatActivity {
                                             FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
                                             ft2.replace(R.id.content, fragment2, "");
                                             ft2.commit();
+                                            isProfileOpen = true;
                                         }
                                         catch (IllegalStateException ignored) {
                                             //no solution
@@ -157,6 +169,7 @@ public class DashboardActivity extends AppCompatActivity {
                                             FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
                                             ft2.replace(R.id.content, fragment2, "");
                                             ft2.commit();
+                                            isProfileOpen = true;
                                         }
                                         catch (IllegalStateException ignored) {
                                             //no solution

@@ -204,7 +204,7 @@ public class ProfileFragment extends Fragment {
         //show newest post first, for this load from last
         layoutManager.setStackFromEnd(true);
         layoutManager.setReverseLayout(true);
-        //set this layout to recycleview
+        //set this layout to recycleView
         postsRecyclerView.setLayoutManager(layoutManager);
 
         //init posts list
