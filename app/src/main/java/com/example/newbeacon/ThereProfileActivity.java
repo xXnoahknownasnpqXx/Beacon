@@ -84,12 +84,11 @@ public class ThereProfileActivity extends AppCompatActivity {
                     nameTv.setText(name);
                     usernameTv.setText(username);
                     interestsTv.setText(interests);
-                    try {
-                        // if image is found then set, otherwise set a default image to avatarIv
+
+
+                    // if image is found then set, otherwise set a default image to avatarIv
+                    if (!image.equals("")){
                         Picasso.get().load(image).into(avatarIv);
-                    }
-                    catch (Exception e){
-                        Picasso.get().load(R.drawable.ic_default_img_grey).into(avatarIv);
                     }
                 }
             }

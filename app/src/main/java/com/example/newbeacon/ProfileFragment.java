@@ -224,7 +224,7 @@ public class ProfileFragment extends Fragment {
 
                     //adapter
                     adapterPosts = new AdapterPosts(getActivity(), postList);
-                    //set this adapter to recycleview
+                    //set this adapter to recycleView
                     postsRecyclerView.setAdapter(adapterPosts);
                 }
             }
